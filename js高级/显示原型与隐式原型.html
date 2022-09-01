@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>__proto__</title>
+</head>
+<body>
+    <!-- 
+        !! 每个函数function都有一个prototype,即显示原型（属性）
+        !! 每个实例对象都有一个__proto__，可称为：隐式原型（属性）
+        * 实例对象的隐式原型的值为其对应构造函数的显示原型的值
+        * 内存结构
+        !! 总结：
+            * 函数的prototype属性：在定义函数时自动添加的，默认值是一个空Object对象
+            * 对象的__proto__属性：创建对象时自动添加的，默认值为构造函数的prototype属性值
+            * 程序员能直接操作显示原型，但不能直接操作隐式原型（ES6之前）
+     -->
+     
+    <script>
+        //定义构造函数
+        function Fn(){//内部语句：this.prototype = {}
+            this.test1 = function(){
+                console.log('test1()')
+            }
+        }
+
+        //个函数function都有一个prototype,即显示原型（属性）,默认指向一个空的Object对象
+        console.log(Fn.prototype);//函数创建之后，才会有这个显示原型
+
+
+        //创建实例对象
+        var fn = new Fn(); //内部语句：this.__proto__ = Fn.prototype
+        //每个实例对象都有一个__proto__，可称为：隐式原型（属性）
+        console.log(fn.__proto__);
+
+        //实例对象的隐式原型的值为其对应构造函数的显示原型的值
+        console.log(Fn.prototype === fn.__proto__);//true
+
+        //给原型添加方法
+        Fn.prototype.test = function(){
+            console.log('test()')
+        }
+
+        Fn.prototype.test2 = function(){
+            console.log('test2()')
+        }
+
+        fn.test1();
+        fn.test2(); 
+
+        console.log(fn.toString());
+
+        
+
+
+    </script>
+</body>
+</html>
