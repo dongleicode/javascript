@@ -26,6 +26,34 @@
                 * function声明的函数==>赋值（fun）,添加为执行上下文的方法
                 * this==>赋值（调用函数的对象）
             * 开始执行函数体代码 
+            
+            !! 函数内部的局部变量是存储在栈内，函数执行完，所有局部变量都会消失，js的垃圾回收机制
      --> 
+     <script>
+        console.log(a1, window.a1);
+        console.log(a2);
+        window.a2()
+        console.log(this);
+        var a1 = 3;
+        function a2(){
+            console.log('a2()');
+        }
+        console.log(a1);
+
+
+        //函数执行上下文
+        function fn(a1){
+            console.log(a1); //3
+            // console.log(a5) //undefined
+            a3()
+            console.log(this); //window
+            console.log(arguments); //伪数组、类数组
+            function a3(){
+                console.log('a3()')
+            }
+        }
+
+        fn(4,5)
+     </script>
 </body>
 </html>
