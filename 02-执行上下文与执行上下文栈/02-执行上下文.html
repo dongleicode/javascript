@@ -30,6 +30,8 @@
             !! 函数内部的局部变量是存储在栈内，函数执行完，所有局部变量都会消失，js的垃圾回收机制
      --> 
      <script>
+        //只要var定义的，才会添加到window对象
+        abc = 123;
         console.log(a1, window.a1);
         console.log(a2);
         window.a2()
