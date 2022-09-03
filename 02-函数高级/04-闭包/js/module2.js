@@ -1,3 +1,6 @@
+/****
+ * IIFE:匿名函数自调用的方式：
+ */
 (function(window){
     //私有数据
     var msg = 'my baby yiyi'
