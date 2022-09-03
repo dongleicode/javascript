@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>面试1</title>
+</head>
+<body>
+    <script>
+        var name = "The window"
+        var obj = {
+            name: 'My Object',
+            getNameFunc: function(){
+                return function(){//不是闭包，没有引用外部函数变量
+                    return this.name;
+                }
+
+                // return ()=>{
+                    //箭头函数的this是obj
+                //     return this.name
+                // }
+            }
+        }
+        console.log(obj.getNameFunc()()) //The window
+
+        var name2 = "The window"
+        var obj2 = {
+            name: 'My Object',
+            getNameFunc: function(){
+                var that = this;
+                return function(){//闭包，引用外部变量
+                    //函数this是window
+                    return that.name;
+                }
+            }
+        }
+        console.log(obj2.getNameFunc()()) //My Object
+    </script>
+    
+</body>
+</html>

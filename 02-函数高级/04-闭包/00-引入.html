@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>引入-闭包</title>
+</head>
+<body>
+    
+    <button>测试1</button>
+    <button>测试2</button>
+    <button>测试3</button>
+
+    <script>
+        var btns = document.getElementsByTagName('button');
+
+        /* 报错
+        for(var i = 0, len = btns.length; i < len; i++){
+            var btn = btns[i]
+            btn.onclick = function(){
+                alert('第'+(i+1)+'个')  //4
+            }
+        }
+        */
+ /*
+        for(var i = 0, len = btns.length; i < len; i++){
+            var btn = btns[i]
+            btn.index = i
+            btn.onclick = function(){
+                alert('第'+(this.index+1)+'个')
+            }
+        }
+         */
+
+
+        //利用闭包
+        for(var i = 0, len = btns.length; i < len; i++){
+           (function(i){
+            var btn = btns[i]
+            btn.onclick = function(){
+                alert('第'+(i+1)+'个')  
+            }
+           })(i)
+        }
+
+
+        console.log(i);
+    </script>
+</body>
+</html>

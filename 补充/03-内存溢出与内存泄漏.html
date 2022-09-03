@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>内存溢出与内存泄漏</title>
+</head>
+<body>
+    <!-- 
+        ! 1.内存溢出
+            * 一种程序运行出现的错误
+            * 当程序运行需要的内存超过了剩余的内存时，就出现抛出内存溢出的错误(程序崩溃)
+        ! 2.内存泄漏
+            * 占用的内存没有及时释放
+            * 内存泄漏积累多了，就容易导致内存溢出
+            ! 常见的内存泄漏：
+                * 意外的全局变量
+                * 没有及时清理的计时器或回调函数
+                * 闭包
+
+        ! 内存泄漏的多了，就会造成内存溢出        
+     -->
+     <script>
+        //内存溢出--》程序崩溃
+        var obj = {}
+        for(var i = 0; i< 10000; i++){
+            obj[i] = new Array(10000000)
+        }
+
+        //内存泄漏
+        //内存泄漏1-意外的全局变量
+        function fn(){
+            a = 3
+            console.log(a);
+        }
+        fn();
+
+        //内存泄漏2-定时器
+        //setInterval之后，没有clearInterval
+        var intervalId = setInterval(function(){},200000);
+        clearInterval(intervalId)
+
+        //内存泄漏3-闭包
+        function fn1(){
+            var arr = [1, 2, 3]
+            function fn2(){
+                console.log(arr.length);
+            }
+            return fn2
+        }
+        var f = fn1();
+        f();
+        
+        f = null; //让内部函数称为垃圾对象-->垃圾回收，回收闭包
+     </script>
+</body>
+</html>

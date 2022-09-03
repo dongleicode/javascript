@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>变量提升</title>
+</head>
+<body>
+    <!-- 
+        !! 1、变量声明提升
+            * 通过var定义（声明）的变量， 在定义语句之前就可以访问到
+            * undefined
+        !! 2、函数声明提升
+            * 通过function声明的函数，在之前就可以直接调用
+            * 值：函数定义（对象）
+
+        * 变量提升和函数提升，产生执行上下文
+        !! 3、问题：变量提升和函数提升是如何产生的
+     -->
+     <script>
+        /**
+         * 面试1
+         * ! 如果函数内部和外部同时都有变量 a
+         * * 函数内部变量提升，a是undefined
+         * * 函数内部变量不提升，a读取的是外部变量
+        */
+        var a = 3
+        function fn(){
+            console.log(a)
+            var a = 4;
+        }
+        fn();  //undefined
+
+        console.log(b) //undefined  变量提升
+        var b = 3
+
+        fn2();  //函数提升 fn2()
+        function fn2(){
+            console.log('fn2()')
+        }
+
+        fn3(); //变量提升  Uncaught TypeError: fn3 is not a function
+
+
+        var fn3 = function(){
+            console.log('fn3()')
+        }
+     </script>
+</body>
+</html>
