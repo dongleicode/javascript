@@ -10,7 +10,6 @@ var onmessage = function(event){
     var result = fibonacci(number)
     postMessage(result);
     console.log('分线程向主线程发送数据：'+ result)
-    alert(result)
     //alert(result)  Uncaught ReferenceError: alert is not defined
     //at onmessage (worker.js:13:5)
     //分线程是看不到window对象的
