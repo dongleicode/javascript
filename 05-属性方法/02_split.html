@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>split</title>
+    <style>
+        .title {
+            font-size: 18px;
+            color: #333;
+        }
+        .text-gap2{
+            text-indent: 36px;
+            font-size: 16px;
+        }
+        .text-p{
+            text-indent: 36px;
+            font-size: 16px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <h1>split</h1>
+    <div class="title">把一个字符串分割成字符串数组</div>
+    <p class="text-gap2">一、字符串转数组的方法</p>
+        <p class="text-gap2">1、split()</p>
+        <p class="text-gap2">2、Object.values(str)</p>
+        <p class="text-gap2">3、Array.from(str)</p>
+        <p class="text-gap2">4、es6中的扩展运算符（...）</p>
+
+    <p class="text-gap2">二、数组转字符串的方法</p>
+        <p class="text-gap2">1、.toString()</p>
+            <p class="text-p">//默认为逗号分隔  .toString();</p>
+            <p class="text-p">var arr=[1,2,3,4,5,0,6,'abcd'];</p>
+            <p class="text-p">console.log(arr.toString());</p>
+        <p class="text-gap2">2、.join(); 默认以逗号分隔  join("-");可以指定符号进行分隔</p>
+            <p class="text-p">var arr=[1,2,3,4,5,'ds','assdasd','asdfa'];</p>
+            <p class="text-p">console.log(arr.join());</p>
+            <p class="text-p">console.log(arr.join('v'));</p>
+        <p class="text-gap2">3、.toLocalString(); </p>
+    </div>
+    <script>
+        var s = 'everyone'
+        var str = "Are you ok ? man"
+        console.log(str.split(" "))  // ['Are', 'you', 'ok', '?', 'man']
+        var a = '1;2;3;4;5;0;6'
+        console.log(a.split(";")) //['1', '2', '3', '4', '5', '0', '6']
+        
+        console.log(Object.values(s));//['e', 'v', 'e', 'r', 'y', 'o', 'n', 'e']
+        console.log(Array.from(s)); //['e', 'v', 'e', 'r', 'y', 'o', 'n', 'e']
+        console.log([...s]);//['e', 'v', 'e', 'r', 'y', 'o', 'n', 'e']
+        var arr=[1,2,3,4,5,0,6,'abcd'];
+        var arr2 = [1, 2, 3, 4]
+        console.log(arr.toString());  //1,2,3,4,5,0,6,abcd
+        // console.log(arr2.toLocalString());
+        console.log(arr.join('-'));  //1-2-3-4-5-0-6-abcd
+    </script>
+</body>
+</html>
