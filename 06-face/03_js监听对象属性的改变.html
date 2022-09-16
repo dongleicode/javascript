@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>defineProperty</title>
+</head>
+<body>
+    <script>
+        let user = {
+            name: 'defineProperty',
+            age: 18,
+            obj: {
+                age: 23
+            }
+        }
+
+        let list = [1, 2]
+
+        Object.keys(user).forEach(key => {
+            let oldV = user[key]
+            Object.defineProperty(user, key, {
+                get(){
+                    console.log('%c 调用get', 'color: #ccc',`获取${key}属性: ${oldV}`)
+                    return oldV
+                },
+                set(val){
+                    console.log('%c 调用set', 'color: red',`修改${key}属性：${val}`)
+                    oldV = val
+                }
+            })
+        })
+
+        //Vue对数组方法的重载
+        let arr = ['push', 'pop', 'shift', 'unshift', 'splice', 'sort', 'reverse']
+        arr.forEach(method => {
+            let original = Array.prototype[method]
+            Object.defineProperty(Array.prototype, method, {
+                value() {
+                    console.log('%c 调用数组方法', 'color: green', method)
+                    original.apply(this, arguments)
+                }
+            })
+        })
+
+
+        // user.obj.age
+        // list[6] = 6
+        // list[0] = 4
+        // list.pop(9)
+        // list[3] = 6
+        // delete user.name
+        // user.sex = '女'
+        // user.age = 23
+        // console.log(list)
+
+
+
+
+        let data = {
+            name: 'proxy',
+            age: 18
+        }
+
+        const proxyObj = new Proxy(user, {
+            get(target, prop){//对象，调用属性名
+                console.log('%c 调用get', 'color: green', target, prop)
+                //Reflect通过代理对象更改目标对象的属性值
+                return Reflect.get(target, prop)
+            },
+            set(target, prop, value){
+                console.log('%c 调用set', 'color: blue', target, prop, value)
+                return Reflect.set(target, prop, value)
+            },
+            deleteProperty(target, prop){
+                console.log('%c 调用set', 'color: lightblue', target, prop)
+                Reflect.deleteProperty(target, prop);
+                return true
+            }
+        })
+
+        // proxyObj.obj.age = 89
+        // console.log(proxyObj);
+        
+
+
+
+    </script>
+</body>
+</html>

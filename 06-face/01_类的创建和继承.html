@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>类的创建和继承</title>
+</head>
+<body>
+    <script>
+        /*
+         * 1、类的创建
+         * new 一个 function，在这个 function 的 prototype 里面增加属性和 方法
+         */
+
+        function Animal(name){
+            this.name = name;
+            this.sleep = function(){
+                console.log(this.name+'正在睡觉');
+            }
+        }
+  
+        Animal.prototype.eat = function(food){
+            console.log(this.name+'正在吃'+food);
+        }
+
+        // var p1 = new Animal('蓝猫');
+        // p1.eat('油条')
+        // console.log(p1)
+
+        //2、类的继承—原型链继承
+        function Cat(){
+            
+        }
+        Cat.prototype = new Animal();
+        // console.log(Cat.prototype.constructor);//此时子类的constructor指向 父类
+        Cat.prototype.constructor = Cat;//子类的constructor指向 子类本身
+        Cat.prototype.name = 'cat';
+
+        let p2 = new Cat();
+        // p2.sleep();
+        // p2.eat('饼干');
+        // console.log(p2.name);
+        // console.log(p2 instanceof Animal); //true
+        // console.log(p2 instanceof Cat);  //true
+
+        /*
+        
+        介绍：在这里我们可以看到 new 了一个空对象,这个空对象指向 Animal 并且 Cat.prototype 指向了这个空对象，这种就是基于原型链的继承。 
+        特点：基于原型链，既是父类的实例，也是子类的实例 
+        缺点：无法实现多继承
+        */
+
+        //3、构造继承：使用父类的构造函数来增强子类实例，等于是复制父类的实例属性给 子类（没用到原型）
+        function Cat2(name){
+            Animal.call(this);
+            this.name = name || 'Tom'
+        }
+
+        let p3 = new Cat2();
+        // console.log(p3.name);
+        // p3.sleep('刘茹')
+        // console.log(p3 instanceof Animal);//false
+        // console.log(p3 instanceof Cat2);//true
+        // p3.eat('刘茹')//报错：只能继承父类实例的属性和方法，不能继承原型上的属性和方法
+
+        /***
+         * 特点：可以实现多继承 
+         * 缺点：只能继承父类实例的属性和方法，不能继承原型上的属性和方法。
+         */ 
+
+
+        /**
+         * 4、实例继承和拷贝继承
+         * 实例继承：为父类实例添加新特性，作为子类实例返回 
+         * 拷贝继承：拷贝父类元素上的属性和方法
+         */ 
+
+
+          /**
+         * 5.组合继承
+         * 组合继承：相当于构造继承和原型链继承的组合体。通过调用父类构造，继承父 类的属性并保留传参的优点，然后通过将父类实例作为子类原型，实现函数复用
+         */ 
+
+         function Cat3(name){
+            Animal.call(this);
+            this.name = name || 'Cat3'
+         }
+         Cat3.prototype = new Animal()
+         Cat3.prototype.constructor = Cat3
+         let p4 = new Cat3()
+        // p4.sleep();
+        // p4.eat('饼干');
+        // console.log(p4.name);
+        // console.log(p4 instanceof Animal); //true
+        // console.log(p4 instanceof Cat3);  //true
+
+       /**
+         * 5.组合继承
+        特点：可以继承实例属性/方法，也可以继承原型属性/方法 
+        缺点：调用了两次父类构造函数，生成了两份实例
+         */ 
+
+
+         /**
+         * 6.寄生组合继承：
+         * 通过寄生方式，砍掉父类的实例属性，这样，在调用两次父类的 构造的时候，就不会初始化两次实例方法/属性
+         */ 
+
+         function Cat4(name){
+            Animal.call(this);
+            this.name = name || 'Cat4'
+         }
+
+         (function(){
+            //创建一个没有实例方法的类
+            var Super = function(){}
+            Super.prototype = Animal.prototype
+            //将实例作为子类的原型
+            Cat4.prototype = new Super();
+         })()
+
+         let p5 = new Cat4()
+          p5.sleep();
+        p5.eat('饼干');
+        console.log(p5.name);
+        console.log(p5 instanceof Animal); //true
+        console.log(p5 instanceof Cat4);  //true
+
+
+
+    </script>
+</body>
+</html>
