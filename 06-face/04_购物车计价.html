@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计价</title>
+</head>
+<body>
+    <script>
+        let arr = [{count:1,price:10,name:'a'},{count:3,price:50,name:'b'},{count:5,price:23,name:'c'},{count:2,price:14,name:'d'}];
+        let r = arr.reduce((pV, cV) => {
+            // console.log(pV);
+            return pV + cV.count*cV.price
+        },0)
+
+        // console.log(r)
+
+
+        //计算 字符串的长度
+        const str = '()()()()(((('
+        // const str = '(((())))))'
+        //const str = '(((())))))(((((('
+        function resetStr(str){
+            let n = 0
+            let newS = str.indexOf('()') != -1 ? str.replace(/\(\)/g, '') : str;
+            if(newS.indexOf('()') != -1){
+                n++;
+                newS = resetStr(newS)
+            }
+            console.log(n);
+            return newS
+        }
+        console.log(resetStr(str));
+
+
+
+        
+    </script>
+</body>
+</html>
