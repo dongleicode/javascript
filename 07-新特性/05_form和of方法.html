@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>form of</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        /**
+         * 创建数组的方法
+         * 1.new Array() 
+         * 2.[]  数组字面量
+         * 3.Array()
+         * 4.Array.from() 和Array.of()都是es6新增的创建数组的静态方法：
+         */ 
+        function sum(...num) {
+            //把一组参数转换为数组
+            let arr = Array.prototype.slice.call(arguments)
+            let a1 = Array.from(arguments)//将类数组转化为数组，使arguments可以运用数组操作的方法：push,reduce
+            // console.log(arguments);
+            // console.log(a1);
+            // console.log(num);//es6的简写形式
+            // num.push(6)
+            return num.reduce((pv, cv, index, array) => {
+                return pv+cv
+            },0)
+        }
+
+        // console.log(sum(1,2,3)); //6
+
+
+        //Array.of() 把一组参数转化为数组。这个方法用于替代在ES6之前常用的Array.prototype.slice.call(arguments)
+
+        
+        console.log(Array.of(...[1,,,5]));[1, undefined, undefined, 5]
+        console.log(Array.from([1,,,5]))
+
+        // console.log(Array.of(1,2,3,4));//(4) [1, 2, 3, 4]
+        // console.log(Array.of(undefined));//[undefined]
+
+
+
+        //Array.form() 将类数组转化为数组，使arguments可以运用数组操作的方法：push,reduce。其应用场景有如下7种
+
+        //【1】字符串被拆分为单字符数组
+        // console.log(Array.from('Matt')); //(4) ['M', 'a', 't', 't']
+        // console.log('Matt'.split('')); //(4) ['M', 'a', 't', 't']
+        // console.log('Matt'.slice(0)); //Matt
+
+        //【2】可以使用Array.from()将集合和映射转换为一个新数组
+        const m = new Map().set(1,2).set(3,4)
+        const s = new Set().add(1).add(2).add(3).add(4)
+        // console.log(m,s);
+        // console.log(Array.from(m));[[1, 2],[3, 4]]
+        // console.log(Array.from(s));[[1, 2, 3, 4]]
+
+        //【3】Array.from()对现有数组执行浅复制
+        const a1 = [4,5,6,7]
+        const a2 = Array.from(a1)
+        // console.log(a1, a2);
+        // console.log(a1 === a2); //false
+
+         //【4】Array.from()可以使用任何可迭代对象
+         const iter = {
+            *[Symbol.iterator](){
+                yield 1;
+                yield 2;
+                yield 3;
+            }
+         }
+        //  console.log(Array.from(iter)); //[1, 2, 3]
+
+
+         //【5】arguments可以轻松的转化为数组
+         function getArgsArray() {
+            let args = Array.prototype.slice.call(arguments)
+            args.push(1)
+            console.log(args);
+            
+             return Array.from(arguments)
+         }
+        //  console.log(getArgsArray(1,2,3,5));[1, 2, 3, 5]
+         
+        //【6】能转换带有必要属性的自定义对象
+        const arrayLikeObject = {
+            0:1,
+            1:2,
+            2:3,
+            3:4,
+            length: 4
+        }
+
+        // console.log(Array.from(arrayLikeObject));//(4) [1, 2, 3, 4]
+
+        //【7】还接受第二个可选的映射函数参数。这个函数可以直接增强先数组的值，而不需像调用Array.from().map()那样先创建一个中间函数。还可以接受第三个可选参数，用于指定映射函数中this的值。但这个重写的this值在箭头函数中不适用。
+
+        const a5 = [1, 2, 3, 4]
+        const a6 = Array.from(a5, x => x ** 2) 
+        const a7 = Array.from(a5, function(x){return x**this.exponent}, {exponent: 2})
+        const a8 = Array.from(a5, (x) => {
+            return x ** 2
+        })
+        // console.log(a6);//[1, 4, 9, 16]
+        // console.log(a7);//[1, 4, 9, 16]
+        // console.log(a8); // [1, 4, 9, 16]
+
+
+
+        
+                          
+
+        
+        
+    </script>
+</body>
+</html>

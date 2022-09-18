@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BigInt</title>
+</head>
+<body>
+    <script>
+        let big = BigInt('123456789123456789')
+        let big1 = BigInt(123456789123456789)
+        let big2 = 123456789123456789;
+        console.log(big); //123456789123456789n  整数字面量 + n
+        console.log(big1); //123456789123456784n   //数字失去精度
+        console.log(big2); //123456789123456780     //js超过16位失去精度
+
+
+        console.log(BigInt.asIntN(16, -20000n));  //-20000n
+        console.log(BigInt.asUintN(16, 20000n));  //20000n
+        console.log(BigInt.asIntN(16, 100000n));  //-31072n
+        console.log(BigInt.asUintN(16, 100000n));  //34464n
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>

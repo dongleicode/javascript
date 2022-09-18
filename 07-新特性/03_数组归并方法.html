@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组归并方法</title>
+</head>
+<body>
+    <script>
+        //两个方法： reduce()  reduceRight() 都会迭代数组的所有项，在此基础上构建一个最终返回值
+
+        //reduce()  从数组的第一项开始遍历到最后一项
+
+        let arr = [1, 2, 3, 4, 5]
+
+        let sum = arr.reduce((prev, cur, index, array)=>{
+            return prev + cur
+        }, 0)//初始值
+
+        console.log(sum); //15
+        
+        //reduceRight() 从数组的最后一项开始遍历至第一项
+        let sum1 = arr.reduceRight((prev, cur, index, array)=>{
+            return prev + cur
+        }, 20)//初始值
+        
+        console.log(sum1); //15
+
+    </script>
+</body>
+</html>
