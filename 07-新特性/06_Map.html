@@ -28,6 +28,8 @@
         let obj = Object.fromEntries(m)
         console.log(obj); //对象
 
+
+        //对象转map
         const obj2 = { a: '2', b: '3', o: 4 }; 
         console.log(Object.entries(obj2));
         const map = new Map(Object.entries(obj2)); 
@@ -40,22 +42,22 @@
 
         // //实现对象可迭代
         let obj1 = {
-    0:123,
-    1:456,
-    2:789,
-    length:3,
-    [Symbol.iterator]:function(){
-        let index = 0
-        return {
-            next(){ //迭代器返回的对象需要有next()方法
+            0:123,
+            1:456,
+            2:789,
+            length:3,
+            [Symbol.iterator]:function(){
+                let index = 0
                 return {
-                    value:obj[index++],//value为迭代器生成的值
-                    done:index > obj.length //迭代器的停止条件，done为true停止
+                    next(){ //迭代器返回的对象需要有next()方法
+                        return {
+                            value:obj[index++],//value为迭代器生成的值
+                            done:index > obj.length //迭代器的停止条件，done为true停止
+                        }
+                    }
                 }
             }
         }
-    }
-}
 
 
 // console.log(obj1);
@@ -78,6 +80,89 @@ let namesIterator = {
 // console.log(namesIterator.next())
 // console.log(namesIterator.next())
 // console.log(namesIterator.next())
+
+
+//Set vs Array /Map vs Object性能对比
+let i = 0
+let tmp = new Array(200000).fill(null).map(e=> i++)
+console.time('array');
+tmp.splice(tmp.findIndex(e => e === 19000), 1)
+console.timeEnd('array')  //array: 0.532958984375 ms
+
+let set2 = new Set(tmp)
+console.time('set2');
+set2.delete(199999)
+console.timeEnd('set2')  //set2: 0.00390625 ms
+
+
+//构造器
+//还原数组1 Array.from(iterable: Iterable<any> | ArrayLike<any>)
+let m3 = new Map([[1,2],[3,4]]);
+m3.set(4, 'abc')
+console.log(m3)
+let arr = Array.from(m3)
+console.log(arr);
+
+
+//手写hashMap
+
+function MyHashMap() {
+    this.init()
+}
+MyHashMap.prototype.init = function () {
+    var store = new Array(8)
+    for(var i = 0; i < store.length; i++){
+        store[i] = new Object();
+        store[i].next = null;
+    }
+    this.store = store;
+}
+
+MyHashMap.prototype.hash = function(i){
+    return i % this.store.length
+}
+MyHashMap.prototype.set = function(key, val){
+    var index = this.hash(key)
+    var quene = this.store[index]
+    while(quene.next){
+        if(quene.next.key === key){
+            quene.next.val = val
+            return;
+        }else{
+            quene = quene.next
+        }
+    }
+
+    quene.next = {
+        key:key,
+        val:val,
+        next: null
+    }
+
+}
+
+MyHashMap.prototype.get = function(key){
+    var index = this.hash(key)
+    var quene = this.store[index]
+    while(quene) {
+        if (quene.key === key) {
+             return quene.val;
+         } else {
+            quene = quene.next;
+        }
+    }
+    return undefined
+}
+
+MyHashMap.prototype.has = function (key) {
+    return !!this.get(key)
+}
+
+var m6 = new MyHashMap();
+m6.set(1, 'a')
+m6.set(2, 'b')
+console.log(m6.get(1));
+console.log(m6.get(2));
 
 
         
