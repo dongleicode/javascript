@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>ajax</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        //一：Ajax 是一个技术统称，是一个概念模型，它囊括了很多技术，并不特指某一技术，它很重要的特性之一就是让页面实现局部刷新。
+        //缺点：回调地狱
+        function ajax(url){
+            const xhr = new XMLHttpRequest()
+            xhr.open('get', url, false)
+            xhr.onreadystatechange= function () {
+                if(xhr.readyState === 4){
+                    if(xhr.status === 200){
+                        console.log(xhr.response);
+                        
+                    }
+                }
+            }
+            xhr.send(null)
+        }
+        ajax('https://smallpig.site/api/category/getCategory')
+
+
+        //二：Fetch 是在 ES6 出现的，它使用了 ES6 提出的 promise 对象。它是 XMLHttpRequest 的替代品。
+        //Fetch 是一个 API，它是真实存在的，它是基于 promise 的。
+        /**
+         * 使用 promise，不使用回调函数。
+            采用模块化设计，比如 rep、res 等对象分散开来，比较友好。
+            通过数据流对象处理数据，可以提高网站性能。
+
+            下面代码利用 Fetch 发送了一个最简单的 get 请求，其中最重要的特点之一就是采用了.then 链式调用的方式处理结果，这样不仅利于代码的可读，而且也解决了回调地狱的问题。
+         */ 
+
+         function ajaxFetch(url){
+            fetch(url).then(res => res.json()).then(data => {
+                console.info(data)
+            })
+         }
+         ajaxFetch('https://smallpig.site/api/category/getCategory')
+
+
+
+         //三：Axios： 是一个基于 promise 封装的网络请求库，它是基于 XHR 进行二次封装。
+         /**
+          * 当然Axios不是一个思想，也不会一个原生 API，它是一个封装库
+          * 特点：
+                从浏览器中创建 XMLHttpRequests
+                从 node.js 创建 http 请求
+                支持 Promise API
+                拦截请求和响应
+                转换请求数据和响应数据
+                取消请求
+                自动转换 JSON 数据
+                客户端支持防御 XSRF
+
+                 // 发送 POST 请求
+                axios({
+                    method: 'post',
+                    url: '/user/12345',
+                    data: {
+                        firstName: 'Fred',
+                        lastName: 'Flintstone'
+                    }
+                })
+          */ 
+       
+
+/**
+          三者区别：
+          网络请求	特点
+            Ajax	一种技术统称，主要利用XHR实现网络请求
+            Fetch	具体API，基于promise，实现网络请求
+            Axios	一个封装库，基于XHR封装，较为推荐使用
+*/ 
+
+    </script>
+</body>
+</html>
