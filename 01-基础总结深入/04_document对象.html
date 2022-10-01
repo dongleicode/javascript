@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>document对象的属性和方法</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <button id="btn">bigin</button>
+    <button id="add">addEventListeners</button>
+    <div id="cont">追加内容:</div>
+    <button id="change">change</button>
+    <table>
+        <tr>
+            <td>
+                <ol id="left">
+                    <li>book</li>
+                    <li>mac</li>
+                    <li>window</li>
+                </ol>
+            </td>
+            <td>
+                <ul id="right">
+                    <li>banana</li>
+                    <li>orange</li>
+                    <li>watermellon</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <script>
+        /**
+         * document.activeElement()  返回当前获取焦点元素
+         * document.addEventListener()  向文档添加句柄
+         * document.createElement() 创建元素节点
+         * document.createTextNode()  创建文本节点
+         * 
+         * 节点对象属性和方法
+         * appendChild()  向节点的子节点列表的末尾添加新的子节点
+         * lastChild 返回最后一个子节点
+         * firstChild 返回第一个子节点
+         * childNodes 返回所有子节点对象
+         * 
+         * 
+         */ 
+        // const b = document.getElementById('btn')
+        // b.onclick = function(){
+        //     const dom = document.createElement('div')
+        //     const txt = document.createTextNode('我来了')
+        //     dom.appendChild(txt);
+        //     document.getElementById('cont').appendChild(dom)
+        // }
+
+        // function sendParams(e) {
+        //     const newA = e
+        //     // const newA = Array.prototype.slice.call(e)
+        //     console.log('传递参数：', typeof newA);
+
+        //     newA.splice(1, 0, [7,8])
+        //     document.querySelector('#cont').innerText = newA
+        // }
+
+        // let obj = {
+        //     name: 'share',
+        //     age: 23
+        // }
+
+        // let arr = [1, 2, 3, 4, 5]
+        // const addParams = sendParams.bind(this, arr)
+        // document.querySelector('#add').addEventListener('click', addParams)
+
+        window.onload = function(){
+            document.querySelector('#change').addEventListener('click', function(){
+            const left = document.querySelector('#left')
+            const right = document.querySelector('#right')
+            const rightLi = right.querySelectorAll('li')
+            const leftLi = left.querySelectorAll('li')
+            const len = leftLi.length;
+
+            if(len >= 0 && leftLi[len-1]){
+                console.log(leftLi[len-1]);
+                right.appendChild(leftLi[len-1])
+            }
+
+            for(let i = 0; i < len; i ++){
+                leftLi[i].onclick =  function () {
+                    // if(leftLi[i] && len>1){
+                        right.appendChild(leftLi[i])
+                    // }
+                }
+            }
+
+
+            for(let x = 0; x < rightLi.length; x ++){
+                rightLi[x].onclick =  function () {
+                    // if(rightLi[x] && rightLi.length>1){
+                        left.appendChild(rightLi[x])
+                    // }
+                }
+            }
+
+        })
+        }
+        
+    </script>
+</body>
+</html>

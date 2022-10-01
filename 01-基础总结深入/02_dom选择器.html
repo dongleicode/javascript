@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>dom选择器</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="div">dom选择器dom选择器</div>
+    <h1 name="dom">dom选择器dom选择器</h1>
+    <div class="a">dom选择器dom选择器</div>
+    <div name="dom">dom选择器dom选择器</div>
+    <div class="a">dom选择器dom选择器</div>
+    <script>
+        /**
+         * dom：Document Object Model 文档对象类型
+         * DOM树  html文档
+         * dom选择器
+         * 1、document.getElementById()
+         * 2、document.getElementsByTagName()
+         * 3、document.getElementsByName() //IE8以上  name属性来获取
+         * 4、document.getElementsByClassName()
+         * 5、document.querySelectorAll() 获取文档中所有的元素
+         * 6、document.querySelector()  获取文档中的第一个元素
+         */ 
+
+         window.onload = function(){
+            document.getElementById('div').style = 'color: blue;'
+            document.getElementsByTagName('div')[0].style = 'color: red;'
+            document.getElementsByName('dom')[0].style = 'color: #ccc;'
+            // document.querySelector('div').style = 'background: lightblue'
+            document.querySelectorAll('div')[1].style = 'background: lightblue'
+
+            // document.querySelector('#div').style = 'border: 1px solid red;'
+            // document.getElementsByClassName('a')[1].style = 'border: 1px solid red;'
+            document.querySelectorAll('div')[3].style = 'border: 1px solid red;'
+
+
+            let doms = document.querySelectorAll('div')
+
+            for(let i = 0; i < doms.length; i++){
+                // doms[0].addEventListener('click', showNum)
+                doms[i].onclick = showNum
+            }
+
+            function showNum(e){
+                
+                console.log(123);
+                
+                // alert(num)
+            }
+         }
+        
+    </script>
+</body>
+</html>

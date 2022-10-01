@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>dom事件</title>
+    <style>
+
+    </style>
+</head>
+<body> 
+    <h1>鼠标状态：<b id="mouse"></b></h1>
+    <button id="b1">onmousedown</button><hr/>
+    <button id="b2">onmouseup</button><hr/>
+    <div>
+        <div style="padding: 20px;">
+            <button id="b3">onmouseover</button>
+        </div>
+    </div><hr/>
+    <button id="b4">onmouseout</button><hr/>
+    <button id="b5">onmouseenter</button><hr/>
+    <button id="b6">onmouseleave</button><hr/>
+    <button id="b7">onmousemove</button><hr/>
+    <button id="b8">键盘事件</button><hr/>
+    <input type="text" id="input">
+
+    <script>
+        /**
+         * 移入：
+         * mouseenter 移入触发，不支持冒泡
+         * mouseover  移入触发，支持冒泡
+         * mousemove  移入触发，在元素内移动鼠标都会触发，用于获取当前鼠标坐标值
+         * 
+         * 移除：
+         * mouseleave 移出触发，不支持冒泡
+         * onmouseout 移出触发，支持冒泡
+         * 
+         * 按键事件
+         * onkeydown
+         * onkeyup
+         * onkeypress
+         * oninput
+         */ 
+        const mouse = document.getElementById('mouse')
+        const mousedown = document.getElementById('b1')
+        const mouseover = document.getElementById('b3')
+        const mouseenter = document.getElementById('b5')
+        const mousemove = document.getElementById('b7')
+        const input = document.getElementById('input')
+
+        mousedown.onmousedown = function () {
+            mouse.innerHTML = '鼠标onmousedown'
+            mousedown.style = 'background: rgba(0,0,0,.3)'
+        }
+        mousedown.onmouseup = function () {
+            mouse.innerHTML = '鼠标onmouseup'
+            mousedown.style = 'background: lightblue'
+        }
+        mouseover.onmouseover = function () {
+            mouse.innerHTML = '鼠标onmouseover'
+            mousedown.style = 'background: rgba(0,0,0,.3)'
+        }
+  
+        mouseover.onmouseout = function () {
+            mouse.innerHTML = '鼠标onmouseout'
+            mousedown.style = 'background: rgba(0,0,0,.3)'
+        }
+        
+        mouseenter.onmouseenter = function () {
+            mouse.innerHTML = '鼠标onmouseenter'
+            mouseenter.style = 'color：red'
+        }
+        mouseenter.onmouseleave = function () {
+            mouse.innerHTML = '鼠标onmouseleave'
+            mouseenter.style = 'color:blue'
+        }
+        // mousedown.onmousemove = function () {
+        //     mouse.innerHTML = '鼠标mousemove'
+        //     console.log('mousemove');
+        // }      
+        mousemove.onmousemove = function (event) {
+            mouse.innerHTML = '鼠标mousemove'+event.clientX
+            console.log('mousemove');
+            
+        }
+
+
+        input.oninput = function(){
+            mouse.innerHTML = input.value
+        }
+        
+    </script>
+</body>
+</html>

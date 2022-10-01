@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>声明变量</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="dom">你好</div>
+    <button id="click">click</button>
+    <script>
+        window.onload = function(){//dom文档渲染完毕后，执行以下代码
+            const btn = document.getElementById('click')
+            btn.onclick = function(){
+                // document.getElementById('dom').innerHTML = '进度'
+                document.getElementById('dom').innerText = '进度'
+            }
+        }
+    </script>
+</body>
+</html>
