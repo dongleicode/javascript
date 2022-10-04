@@ -12,10 +12,51 @@
 <body>
     <script>
         /**
-         * parseInt()  字符串转化为数字，返回的是整数
+         * parseInt()  字符串转化为数字，返回的是首个数字(整数)
          * 
-         *  
+         * 浮点数，小数操作
+         * parseFloat()  
+         * 
+         * Number()
+         * 
+         * toFixed()
+         * 
+         * toPrecision()  科学计数
+         * 
          */ 
+         console.log(parseInt('10')); //10
+         console.log(parseInt('10.1')); //10
+         console.log(parseInt('10.6')); //10
+         console.log(parseInt('10 years')); //10
+         console.log(parseInt('years 10')); //NaN  
+         console.log(parseInt('10 20 30')); //10
+
+
+        console.log(parseFloat('9.3')); //9.3
+        console.log(parseFloat('9.0000003')); //9.0000003
+
+        console.log(Number('10.222')); //10.222
+        console.log(Number(true));  // 1
+        console.log(Number(false));  // 0
+        console.log(Number(null));  // 0
+        console.log(Number(undefined));  // NaN
+        console.log(Number(NaN));  // NaN
+        console.log(Number('abc'));  // NaN
+
+        console.log(10.5.toFixed(2)); //10.50
+        console.log(10.5.toFixed(1)); //10.5
+        console.log(10.5.toFixed(0)); //11
+        console.log(10.4.toFixed(0)); //10
+        console.log(10.444.toFixed(2)); //10.44
+        console.log(10.445.toFixed(2)); //10.45
+
+
+        console.log(9.656.toPrecision(2)); //9.7
+        console.log(9.656.toPrecision(1)); //1e+1
+        console.log(9.656.toPrecision(5)); //9.6560
+        console.log(9.656.toPrecision()); //9.656
+        
+
     </script>
 </body>
 </html>
