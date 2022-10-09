@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>对象冻结和深度冻结</title>
+</head>
+<body>
+    <script>
+        //深度冻结
+        function freezeFn(obj){
+            if(Object.isFrozen(obj)){
+                return obj
+            }
+
+            //Reflect.ownKeys() 和 Object.keys()作用一样
+            console.log(Reflect.ownKeys(obj));
+            console.log(Object.keys(obj));
+
+            Reflect.ownKeys(obj).forEach(key => {
+                return (typeof obj[key] === 'object' && freezeFn(obj[key]))
+            })
+            
+            return Object.freeze(obj)
+        };
+
+        let a = {
+            name: 'freeze',
+            resume: {
+                age: 23
+            }
+        }
+
+        let o = {
+            name: 'freeze',
+            resume: {
+                age: 23
+            }
+        }
+
+        let b = freezeFn(a) //a和b都被深度冻结
+        a.name = 'one'
+        a.resume.age  = 33
+        b.name = 'sldfj'
+        b.resume.age  = 43
+        console.log(b.name); //freeze
+        console.log(b.resume.age); // 23
+        console.log(a.name); //freeze
+        console.log(a.resume.age);// 23
+
+        console.log(Object.isFrozen(a));//true
+        console.log(Object.isFrozen(b));//true
+
+        let c = Object.freeze(o)
+        
+        console.log(Object.isFrozen(o));//false
+        console.log(Object.isFrozen(c));//true
+
+        c.name = '大明'
+        c.resume.age = 88
+        console.log(c.resume.age);//99 表明Object.freeze()只能冻结第一层，不能冻结嵌套的数据
+        console.log(c.name);//freeze  第一层数据没变
+
+
+        
+    </script>
+</body>
+</html>

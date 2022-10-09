@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>线程中断 串行执行 并发执行</title>
+</head>
+<body>
+    <script>
+        function sleep(seconds){
+            return new Promise((resolve, reject) => {
+                setTimeout(function(){
+                    console.log(Math.random()*10);
+                    resolve(seconds)
+                },seconds)
+
+            })
+        }
+
+        function sleep1(n, seconds){
+            return new Promise((resolve, reject) => {
+                setTimeout(function(){
+                    console.log(n);
+                    resolve(n)
+                },seconds)
+
+            })
+        }
+
+
+        //线程中断
+        async function xcSleep(){
+            console.log('开始');
+            await sleep(2000) //串行执行  所以async await 代替不了Promise
+            await sleep(2000) //串行执行
+            await sleep(2000) //串行执行
+            console.log('结束');
+        }
+        // xcSleep();
+
+
+        //并发执行
+        async function bfSleep(seconds){
+            let tasks = []
+            for(let i = 0; i < 3; i++){
+                tasks.push(sleep1(i, seconds))
+            }
+            Promise.all(tasks)
+        }
+        bfSleep(3000)
+
+
+
+
+    </script>
+</body>
+</html>
