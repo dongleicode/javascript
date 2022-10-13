@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>对象打印</title>
+</head>
+<body>
+    <script>
+        //第一题
+        function foo(){
+            console.log(this.a);
+        }
+        const obj = {
+            a: 1,
+            doFoo: foo
+        }
+        console.log(obj.doFoo());//1 undefined
+
+
+        //第二题
+        setTimeout(function(){//宏任务
+            console.log(100)
+        })
+
+        new Promise(function(resolve, reject){//微任务，优先执行
+            console.log(2)
+            resolve()
+            console.log(3)
+        }).then(function(){
+            console.log(4)
+            new Promise(function(){
+                console.log(5)
+                setTimeout(function(){//宏任务
+                    console.log(6)
+                },10)
+            })
+        })
+
+        //同步代码
+        console.log(7);
+        console.log(8);
+        //2 3 4 5 7 8 100 6
+    </script>
+</body>
+</html>
