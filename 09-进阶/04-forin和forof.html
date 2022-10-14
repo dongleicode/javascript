@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>for in for of</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+       /** 
+         * 遍历对象
+         * for in 获取key
+         * for of报错
+         * 
+        */
+        const obj = {
+            a: 1, 
+            b: 2, 
+            c: 3
+        }
+
+        for(let i in obj){
+            console.log(i)
+        }
+
+        // for(let i of obj){
+        //     console.log(i) //obj is not iterable
+        // }
+
+         /** 
+         * 遍历数组
+         * for in 获取数组元素下标
+         * for of 获取数组元素
+         * 
+        */
+    //    const arr = ['a', 'b', 'c', 'd']
+       const arr = [{name: 'one'}, {name: 'two'}, {name: 'three'}]
+
+       for(let i in arr){
+            console.log(i)  
+        }// 0 1 2
+
+        for(let i of arr){// a b c d
+            console.log(i) //{name: "one"}  {name: 'two'} {name: 'three'}
+        }
+    </script>
+</body>
+</html>

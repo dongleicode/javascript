@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>递归</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        /**
+         * 递归：顾名思义，就是反复调用自身
+         * 
+         * 
+         *  
+         * 
+        */
+       //外企面试题，第一个，我觉得是算法的问题
+       //1.深入研究第一题： 
+        let brackets1 = '()())))'       //理想结果 3
+        let brackets2 = '()()())'  //理想结果： 1
+        let brackets3 = '(((()()())))'   //理想结果 0
+
+        function recursion(str) {
+            // if(str.indexOf('()') === -1){
+            //     str = str
+            // }
+            // str = str.replace(/\(\)/g, '')
+            // str = recursion(str)
+
+            str = str.indexOf('()') !== -1 ? str.replace(/\(\)/g, '') : str
+            str = str.indexOf('()') !== -1 ? str = recursion(str) : str
+
+            // str = str.replace(/\(\)/g, '')
+            // if(str.indexOf('()') !== -1){
+            //     str = recursion(str)
+            // }
+            let len = str && str.length || 0
+            return len
+        }
+        recursion(brackets1)
+        recursion(brackets2)
+        recursion(brackets3)
+
+        console.log(recursion(brackets1));
+        console.log(recursion(brackets2));
+        console.log(recursion(brackets3));
+
+        //2.求n以内的自然数之和
+        function addSelf(n){
+            if(n <= 1){
+                return 1
+            }
+            return n+addSelf(n-1)
+        }
+
+        function addSelfFn(n){
+            if( n<=0 )   //考虑的错误情况
+                return 0; //这里要看你设计在错误情况下返回什么值了
+            if( n==1 )
+                return 1;
+            if( n==2 )
+                return 2+1;
+            return n + n - 1 + addSelfFn(n-2)
+        }
+
+        console.log(addSelf(5));
+        console.log(addSelfFn(5));
+
+        //3.n的阶乘
+        function factorial(n) {
+            if(n == 1){
+                return 1
+            }
+            return n*factorial(n-1)
+        }
+        // console.log(factorial(6));//720
+        
+        
+
+
+
+
+
+
+    </script>
+</body>
+</html>
