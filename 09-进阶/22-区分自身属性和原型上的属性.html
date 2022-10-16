@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>区分自身属性和原型上的属性</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        var l = console.log
+        let obj = {}
+        obj.a = 'a'
+        obj.__proto__.b = 'b'
+        //查找自身属性,查找不到原型链上的属性
+        l(obj.hasOwnProperty('b'))  //false
+        l(obj.hasOwnProperty('a')) //true
+        l(Object.keys(obj)) //["a"]
+        l(Object.values(obj)) //["a"]
+
+        //查找自身属性和原型上的属性
+        console.log('b' in obj);//true 
+        console.log(obj.b);//b
+        for(let i in obj){
+            console.log(i); // a b
+        }
+
+        var toType = (type)=> Object.prototype.toString.call(type)
+        l(toType(obj))
+
+
+    </script>
+</body>
+</html>

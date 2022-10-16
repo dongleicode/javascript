@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>对象调用的this</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        var a = 2
+        function fn() {
+            // 'use strict'
+            // console.log(this === window) //true; 'use strict' false
+            // console.log(this === window) //false 
+            // console.log(this.a);
+            console.log(this);
+
+        }
+
+        /** 
+         * 谁用.调用的我，谁就是我的this
+         * 
+        */
+
+        let obj = { 
+            a: 1, 
+            fn: fn 
+        }
+        obj.fn() //{a: 1, fn: ƒ} 谁用我的函数，谁就是我的this,this就是obj
+
+        let arr = [fn, 2, 3]
+        arr[0]()//this就是arr (3) [ƒ, 2, 3]
+
+        let arr1 = [obj, 5, 6]
+        arr1[0].fn() //{a: 1, fn: ƒ}  this就是obj
+    </script>
+</body>
+</html>

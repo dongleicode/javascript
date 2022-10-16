@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>this实战</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <button id="btn">点我</button>
+    <script>
+        let obj = {
+            name: '太极',
+            fn: function(){
+                const btn = document.querySelector('#btn')
+                const self = this;
+                //两种方式获取this
+                btn.onclick = function(){
+                    console.log(self);
+                }
+                // btn.onclick = ()=>{
+                //     console.log(this)
+                // }
+            }
+        }
+        obj.fn()
+       
+
+
+    </script>
+</body>
+</html>

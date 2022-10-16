@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>作用域</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        //函数内部：使用var，函数顶上挂
+        //函数内部：直接赋值，没有var声明，先到上层找，找不到，就到window
+        (function(){
+            console.log(a)//undefined 声明提前
+            var a = 1;
+            (function(){
+                if(true){
+                    try{
+                        res = 'ok' //赋值 变量查找机制
+                    }catch(e){}
+                    console.log('if里面：'+ res); //ok
+                }
+                var res  
+            })()
+            console.log('第一层：'+ res);
+        })()
+        // console.log(a)//Uncaught ReferenceError: a is not defined
+
+        // console.log(res)//内部使用var res, not defined; 内部不使用，不报错
+
+
+    </script>
+</body>
+</html>

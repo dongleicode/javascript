@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>类型判断</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        /**
+         * 1.typeof  object function undefined
+         * 2.instanceof  a instanceof b, a是否在b的构造函数原型链上
+         * 3.constructor  a.constructor, 实例对象的构造函数
+         * 3.Object.prototype.toString.call()  [object Array]
+         * 
+        */
+        
+        function Person() {
+            
+        }
+        console.log(Person instanceof Object)//true
+
+        let son = new Person()
+        console.log(son instanceof Person); //true
+        console.log(son instanceof Object); //true
+
+        console.log(son.constructor === Person);  //true
+        console.log(son.constructor === Object);  //false
+
+        let s = 'str', num = 123, un = undefined, n = null, bol = true, big= 1n,sym = Symbol.for('a')
+
+        const typeBy = function(type){
+            return Object.prototype.toString.call(type)
+        }
+                
+        //基本数据类型
+        console.log(typeBy(s));//[object String]
+        console.log(typeBy(num));//[object Number]
+        console.log(typeBy(un));//[object Undefined]
+        console.log(typeBy(n));// [object Null]
+        console.log(typeBy(bol));//[object Boolean]
+        console.log(typeBy(big));//[object BigInt]
+        console.log(typeBy(sym));//[object Symbol]
+
+        //引用数据类型
+        console.log(typeBy(Person));//[object Function]
+        console.log(typeBy(son));//[object Object]
+
+        
+
+
+    </script>
+</body>
+</html>
