@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>数组练习</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <input id="input" type="text"><button onclick="add()">添加</button>
+    <ul class="ul"></ul>
+    <script>
+        let arr = [], i=0, obj = {}
+        function dom(str, inx){
+            let li = `
+                <li data-key="${inx}">${str}<button onclick="edit(this)">修改</button><button onclick="del(this)">删除</button></li>
+            `
+            return li
+        }
+        function add() {
+            let cont = document.querySelector('#input').value
+            let li = document.createElement('li')
+            li.innerHTML = `
+            ${cont}<button onclick="edit(this)">修改</button><button onclick="del(this)">删除</button>
+            `
+            li.setAttribute('data-key', i)
+            Reflect.set(obj, i, cont)
+            document.querySelector('.ul').appendChild(li)
+            i++;
+            console.log(obj);
+            console.log(objToArr(obj))
+
+        }
+        function edit(e){
+           let cont = prompt('修改为：', '')
+           if(cont){
+                console.log(e.parentElement);
+                console.log(e.previousSibling);
+                console.log(e.parentNode == e.parentElement); //true
+                console.log(e.parentNode === e.parentElement); //true
+                console.log(e.previousSibling.textContent);
+                console.log(e.parentElement.textContent === e.parentElement.innerText); //true
+                console.log(e.parentElement.textContent === e.parentElement.innerHTML); //false
+                e.previousSibling.textContent = cont
+           }
+        }
+
+        function del(e){
+            let ul = document.querySelector('.ul')
+            let li = e.parentNode
+            console.log(e.parentNode)
+            //两种方式
+            // e.parentNode.remove()
+            ul.removeChild(li)
+            let key = e.parentNode.getAttribute('data-key')
+            Reflect.deleteProperty(obj, key)
+            console.log(obj);
+        }
+
+
+        function objToArr(obj) {
+            //对象转数组
+            // let arr = []
+            // for(let i in obj){
+            //     console.log(obj[i])
+            //     arr.push(obj[i])
+            // }
+            return Object.values(obj)
+        }
+
+
+        const object1 = {
+            a: 'somestring',
+            b: 42
+            };
+
+        console.log(Object.entries(object1))
+        for(const [k, v] of Object.entries(object1)){
+            console.log(k, v)
+        }
+
+        for(const v of Object.keys(object1)){
+            console.log(v)
+        }
+        for(const v of Object.values(object1)){
+            console.log(v)
+        }
+
+
+        
+
+    </script>
+</body>
+</html>

@@ -14,7 +14,11 @@
         /** 
          * 增加: 下标 arr[0]; push(); unshift()
          * 删除：pop(); shift()
+         * arr的那些方法会修改原数组，那些方法不会修改原数组
          * 
+         * 改变原数组的方法: push unshift shift pop splice  for(var i=0; i<len; i++){}
+         * 
+         * 不改变原数组的方法：map slice forEach (for of) filter some every reduce
          * 
         */
         let arr = []
@@ -23,15 +27,104 @@
         arr.push(3)//从尾部插入
         console.log(arr);//[1, 2, 3]
         
+        let arr2 = arr
         arr.unshift(9) //从头插入
         console.log(arr);//[9, 1, 2, 3]
+        console.log(arr2);//[9, 1, 2, 3]
 
         arr.pop() //从尾部删除
         console.log(arr); //[9, 1, 2]
-  
+        console.log(arr2); //[9, 1, 2]
         arr.shift()//从头部删除
         console.log(arr); // [1, 2]
+        console.log(arr2);// [1, 2]
         
+        
+        let i = 1;
+        let arr1 = new Array(100).fill(null).map(()=> i++)//没有fill,数组所有项都是empty
+        
+        let arr3 = arr1
+        arr1.splice(2, 7)
+        console.log(arr1 === arr3); //true
+        console.log(arr3);
+
+        //slice 截取数组，返回截取的部分，不影响原数组
+        //Array.prototype.slice.call(类数组)  将类数组转换为真数组
+        console.log(arr1.slice(2, 5)); //[3,4,5]  
+        console.log(arr1);
+        console.log(arr3);
+
+        function fn(...args){
+            console.log(typeof arguments)  //Object
+            console.log(Object.prototype.toString.call(arguments)) //[object Arguments]
+            //伪数组转化为真数组
+            let newA = Array.prototype.slice.call(arguments)
+            let newA1 = [...args]
+            console.log(Object.prototype.toString.call(newA));  //[object Array]
+            console.log(Object.prototype.toString.call(newA1));//[object Array]
+        }
+
+        fn(1, 2, 3)
+
+        let arr4 = [1, 2, 3, 4, 5]
+        arr4.forEach(function(v, i, arr){
+            v = v+1
+            console.log(v,i,arr);
+            /** 
+             * 1 0 (5) [1, 2, 3, 4, 5]
+               2 1 (5) [1, 2, 3, 4, 5]
+               3 2 (5) [1, 2, 3, 4, 5]
+               4 3 (5) [1, 2, 3, 4, 5]
+               5 4 (5) [1, 2, 3, 4, 5]
+             * 
+            */
+        })
+        console.log(arr4) //(5) [1, 2, 3, 4, 5]
+
+
+        //遍历会改变原数组
+        for(let i = 0; i < arr4.length; i++){
+            console.log(arr4[i])
+            arr4[i] += 1;
+        }
+        console.log(arr4) //(5) [2, 3, 4, 5, 6]
+
+        //不会改变原数组
+        for(var val of arr4){
+            console.log(val);
+            val = val+2
+        }
+        console.log(arr4) // [2, 3, 4, 5, 6]
+
+        //map: 不改变原数组
+         let arr5 = arr4.map((v,i)=> v*2)
+         console.log(arr5) //[4, 6, 8, 10, 12]
+         console.log(arr4) //[2, 3, 4, 5, 6]  
+        //filter: 不改变原数组
+        let arr6 = arr4.filter((v,i) => v >=5)
+        console.log(arr6) //[5, 6]
+        console.log(arr4) //[2, 3, 4, 5, 6]  
+        //some:有一个为真，则返回真
+        let arr7 = arr4.some((v,i)=>{
+            return v > 5 //true
+        })
+        console.log(arr7)
+        console.log(arr4)//[2, 3, 4, 5, 6]
+
+        //every:所有元素都满足条件，才为真；有一个为false，则为false
+        let arr8 = arr4.every((v,i)=>{
+            return v > 1 //true
+        })
+        console.log(arr8)
+        console.log(arr4)//[2, 3, 4, 5, 6]
+
+        //reduce:求和
+        let arr9 = arr4.reduce((cur, pre)=>{
+            return cur+pre
+        })
+        console.log(arr9) //20
+        console.log(arr4) //[2, 3, 4, 5, 6]
+
 
         
 

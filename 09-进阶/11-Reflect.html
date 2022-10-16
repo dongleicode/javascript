@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Reflect</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        //Reflect.construct(obj.constructor, [])  创建对象
+        //Reflect.set(obj, 属性名，属性值)  //设置修改属性
+        //Reflect.deleteProperty(obj, 属性名)  //删除属性
+
+        let obj = {}
+        Reflect.set(obj, 'name', '宝宝')
+        Reflect.set(obj, 'age', '3')
+        console.log(obj); //{name: "宝宝", age: "3"}
+        Reflect.deleteProperty(obj, 'age')
+        console.log(obj); //{name: "宝宝"}
+
+        let obj1 = Reflect.construct(obj.constructor, [])
+        console.log(obj1); //{}
+        obj1.name = '打包'
+        obj1.age = 35
+        console.log(obj1); //{name: "打包", age: 35}
+        Reflect.deleteProperty(obj1, 'name')
+        console.log(obj1); //{age: 35}
+
+        let obj2 = {ming: '风云', age: 33}
+        Reflect.set(obj2, 'big', 888)
+        Reflect.deleteProperty(obj2, 'ming')
+        Reflect.set(obj2, 'big', 999)
+        console.log(obj2); //{age: 33, big: 999}
+
+    </script>
+</body>
+</html>

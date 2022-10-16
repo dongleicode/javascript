@@ -110,7 +110,7 @@
       let obj8 = new obj7.constructor() //obj7的类型和 obj8的类型一样
       console.log(obj8);      
 
-      //方式6：类型反射Reflect.construct()
+      //方式6：类型反射Reflect.construct(obj.constructor, []) 第二个参数必传，否则报错
       let obj9 = Reflect.construct(obj7.constructor, [])
       console.log(obj9);
             
