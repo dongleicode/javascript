@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>创建对象</title>
+    <style></style>
+  </head>
+  <body>
+    <script>
+      /**
+       * 方式1：对象字面量  var a = {}  var b = 123
+       * 方式2： 构造函数： new Object()
+       * 方式3：定制化对象，依赖原型 Object.create()2个参数  Object.defineProperty()三个参数
+       * 方式4：浅拷贝 Object.assign({}, obj)  
+       * 方式5：深拷贝 new oldObj.constructor()
+       * 方式6：Reflect.construct(obj7.constructor, [])
+       * 
+       */
+
+      let obj = { a: 1, b: 2 };
+      let nObj = new Object(obj); //MDN 如果传进去的是引用类型的值，仍然会返回这个值，经他们复制的变量保有和源对象相同的引用地址
+      console.log(obj === nObj);
+
+      let obj3 = Object.create(
+        { name: "dali" },
+        {
+          myAge: {
+            value: 35,
+            writable: false,
+          },
+        }
+      ); //方法用于创建一个新对象 ，使用现有的对象来作为新创建对象的原型（prototype）
+      obj3.myAge = 25; //改变不了
+      console.log(obj3.name, obj3.myAge);
+
+      // let obj4 = Object.create({})
+      // let obj4 = {}
+      let obj4 = Object.create(
+        {},
+        {
+          myAge: {
+            value: 25, //与属性关联的值。可以是任何有效的 JavaScript 值（数字，对象，函数等）。 默认为 undefined
+            writable: true, //true只有与该属性相关联的值被assignment operator (en-US)改变时。 默认为 false
+            configurable: false, //是否可以用Object.defineProperty()数据劫持；是否可以删除。默认false
+            enumerable: false, //只有在枚举相应对象上的属性时该属性显现。 默认为 false
+            // get: function(){ //作为该属性的 getter 函数，如果没有 getter 则为undefined。函数返回值将被用作属性的值。 默认为 undefined
+            //     console.log('数据获取');
+            // },
+            // set: function(val){//作为属性的 setter 函数，如果没有 setter 则为undefined。函数将仅接受参数赋值给该属性的新值。 默认为 undefined
+            //     console.log('数据重置')
+            // }
+          },
+        }
+      );
+      obj4.myAge = 35;
+      console.log(obj4.myAge);
+
+      // console.log(obj3);
+      // console.log(obj4);
+
+      let obj5 = Object.create(
+        {},
+        {
+          myAge: {
+            //get set 和writable valve冲突，不能同时存在，否则报错
+            get() {
+              console.log("数据获取" + obj5.age);
+              return "老了";
+            },
+            set(nV) {
+              console.log("数据重置：" + nV);
+              // obj5.age = nV
+            },
+          },
+        }
+      );
+
+      obj5.myAge = 23;
+
+      console.log(obj5.myAge);
+
+      let obj6 = Object.create({}, {
+          age: {
+              value: 2,
+              configurable: true,
+              enumerable: true  //遍历是否可以读取  false不可读取
+          }
+      });
+      //configurable：false 下面代码报错
+      Object.defineProperty(obj6, "age", {  
+        value: 35
+      });
+      console.log(obj6.age);
+
+      //enumerable:false 下面遍历没有值
+      for(let i in obj6){  //enumerable: false不可被读取
+          console.log(i);
+          console.log(obj6[i]);
+      }
+
+      //方式4： 浅拷贝
+      let obj7 = Object.assign({}, {name: 'shallowCopy'})
+      console.log(obj7);
+
+      //方式5： 深拷贝   obj7.constructor 指向构造函数 相当于 new Object()
+      console.log(obj5.constructor);
+      
+      let obj8 = new obj7.constructor() //obj7的类型和 obj8的类型一样
+      console.log(obj8);      
+
+      //方式6：类型反射Reflect.construct()
+      let obj9 = Reflect.construct(obj7.constructor, [])
+      console.log(obj9);
+            
+      
+
+
+
+    </script>
+  </body>
+</html>

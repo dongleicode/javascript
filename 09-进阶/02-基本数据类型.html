@@ -28,6 +28,14 @@
         let sy4 = Symbol.for(name)
         console.log(sy3 === sy4);//false
         console.log(sy3 == sy4);//false
+        let obj5 = {
+            age: 12,
+            [sy2]: 'sum'
+        }
+        console.log(Object.getOwnPropertySymbols(obj5)[0]);//获取对象上的symbol属性 Symbol('dali')
+        // Object.getOwnPropertySymbols(sy1).forEach((item, index)=>{
+        //     console.log(item, index)
+        // })
 
         console.log(0.1+0.2); //0.3 00 00 00 00 00 00 00 04 // 15个0
 
@@ -35,9 +43,15 @@
         const big = 123456789012345678
         console.log(big);//数字超过16位之后，就失真
         console.log(BigInt(big));
+        const big3 = BigInt(big)
+        const big1 = big3 + 1n;
+        const big2 = big3 + BigInt(1)
+        console.log(big1); //123456789012345681n
+        console.log(big2);
+        console.log(big1 == big2);//true
+        console.log(Number(big1));
         
 
-        console.log(Object.getOwnPropertySymbols(sy3));
         
 
         
@@ -66,6 +80,23 @@ function isType(type){
 // console.log(Object.prototype.toString.call(name) === "[object String]") //true
 const typeFn = isType("String")
 // console.log(typeFn(bool));
+
+
+function supper(name, age){
+    this.name = name
+    this.age = age
+    this.showName = function(){
+        console.log(this.name);
+    }
+}
+
+let sub = new supper('名利', 35)
+sub.showName()
+//a instanceof b 检验前者是否是后者的原型链
+console.log(sub instanceof supper); //true
+//constructor检验构造函数
+console.log(sub.constructor == supper)  //true
+
 
 
 

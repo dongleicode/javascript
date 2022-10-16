@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>操作对象</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        let obj1 = {}
+        let prop = 'sex'
+        obj1.age = 12
+        obj1['name'] = '大理'
+        obj1[prop] = '男'
+
+        console.log(obj1);
+
+        //遍历对象：
+        //for in 与 for of的区别  for of 无法便利  可以用Object.values()
+
+        for(let key in obj1){
+            console.log(key, obj1[key]);
+        }
+
+        // for(let val of obj1){
+        //     console.log(val);  //obj1 is not iterable
+        // }
+
+        //for 0f 用于数组遍历,其实也很少用
+        let arr = [{name: 1}, {name:2}, {name: 3}]
+        for(let item of arr){
+            console.log(item);
+        }
+        
+        console.log(Object.keys(obj1));
+        
+        console.log(Object.values(obj1));
+
+
+    </script>
+</body>
+</html>
