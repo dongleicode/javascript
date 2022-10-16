@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>深浅拷贝</title>
+    <style></style>
+  </head>
+  <body>
+    <script>
+      let o1 = {
+        a: 1,
+        b: 2,
+        c: {
+          a: 11,
+          b: 22,
+        },
+      };
+      let o2 = o1; //浅拷贝  引用地址会相互影响
+      o2.a = "a";
+      o1.b = "b";
+      o2.c.a = 33;
+      console.log(o1 === o2); //true
+      console.log(o1, o2);
+
+      //数组浅拷贝
+      let a1 = [{ a: 1 }];
+      let a2 = a1.slice(); //浅拷贝
+      console.log(a1 === a2); //false
+      a1[0].a = "修改";
+      console.log(a1, a2); //a2和a1一样
+
+      let o3 = { a: { b: 1 } };
+      let o4 = Object.create(o3);
+      console.log(o3 === o4); //false
+      o3.a.b = "修改";
+      console.log(o3, o4);
+
+      let o5 = JSON.parse(JSON.stringify(o3)); //部分深拷贝
+      o5.a.b = 5;
+      console.log(o5 === o3); //false
+      console.log(o5, o3); //o3没变
+
+      console.log(typeof a1); //object
+      console.log(Object.prototype.toString.call(a1)); //[object Array]
+
+      let obj1 = {
+        array: [1, 2],
+        arrayOfObj: [{ a: 3, b: 4 }],
+        obj: { c: 5 },
+        fn: function () {
+          console.log(6);
+        },
+        data: new Date(),
+        map: new Map([
+          ["d", 8],
+          ["e", 8],
+        ]),
+        set: new Set([10, 11]),
+        num: 12,
+        reg: /7/,
+        nuVal: null, //null是对象
+      };
+
+      function shallowClone(obj) {
+        let cloneObj = {};
+        for (let key in obj) {
+          console.log(obj.hasOwnProperty(key));
+          if (obj.hasOwnProperty(key)) {
+            cloneObj[key] = obj[key];
+          }
+        }
+        return cloneObj;
+      }
+      let obj2 = shallowClone(obj1);
+
+
+      let wm = new WeakMap()
+      function deepClone(obj) {
+        //null function
+        if (obj === null || typeof obj !== "object") {
+          return obj;
+        }
+
+        if(wm.has(obj)){
+            return wm.get(obj)
+        }
+
+        if (obj instanceof Map) {
+          let cloneObj = new Map();
+          wm.set(obj, cloneObj)
+          for (let [k, v] of obj) {
+            cloneObj.set(k, deepClone(v));
+          }
+          return cloneObj;
+        } else if (obj instanceof Set) {
+          let cloneObj = new Set();
+          wm.set(obj, cloneObj)
+          for (let v of obj) {
+            cloneObj.add(deepClone(v));
+          }
+          return cloneObj;
+        } else if (obj instanceof RegExp) {
+            let cloneObj = new RegExp(obj);
+            wm.set(obj, cloneObj)
+            return cloneObj;
+        } else if (obj instanceof Date) {
+            let cloneObj = new Date(obj);
+            wm.set(obj, cloneObj)
+            return cloneObj;
+        } else {
+          //对象，数组
+          let cloneObj = new obj.constructor();
+          wm.set(obj, cloneObj)
+          for (let key in obj) {
+            if (obj.hasOwnProperty(key)) {
+              cloneObj[key] = deepClone(obj[key]);
+            }
+          }
+          return cloneObj;
+        }
+      }
+
+      // let obj3 = deepClone(obj1)
+      // obj3.map.set('d', '555')
+      // obj3.set.add('d')
+      // obj3.data = '2022-10-16 15:58:39'
+      // obj3.obj.c = 7;
+      // obj3.array[0] = 999
+      // obj3.arrayOfObj[0].a = 6;
+      // console.log('obj1', obj1);
+      // console.log('obj3', obj3);
+      // console.log(obj1.obj.constructor);
+
+      /**
+         * for in 数组和对象都可以遍历
+          对象返回的是key;数组返回的是索引
+         * 
+         for of只能遍历数组，得到的是元素；遍历对象报错
+      
+
+        let a = [1, 2, 3]
+        let ao1 = [{a:1}, {b:2}, {c: 3}]
+        for(let i in ao1){
+            console.log(ao1[i]) //0 1 2  key
+        }
+
+        for(let i in obj3){
+            console.log(i) //0 1 2  key
+        }
+
+        for(let item of ao1){
+            console.log(item);
+        }
+
+        */
+
+      //环形对象:解决方法用 weakMap
+      let obj4 = {
+        to: obj1,
+      };
+      obj1.to = obj4;
+      let cloned = deepClone(obj1)
+      console.log(obj1);
+      console.log(cloned); //Maximum call stack size exceededat new Object (<anonymous>)
+
+    
+    //   let normalCopy = JSON.parse(JSON.stringify(obj1)); //常用深拷贝
+    //   console.log(normalCopy);
+      /**
+             * 环形对象报错
+             * Converting circular structure to JSON
+    --> starting at object with constructor 'Object'
+    |     property 'to' -> object with constructor 'Object'
+    --- property 'to' closes the circle
+    at JSON.stringify (<anonymous>)
+    at 13-深浅拷贝.html:156
+             * 
+             * 
+            */
+    </script>
+  </body>
+</html>

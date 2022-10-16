@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>构造函数</title>
+    <style></style>
+  </head>
+  <body>
+    <script>
+      /**
+       * 构造函数和普通函数的区别
+       * 1.构造函数内部的this指向构造函数实例；普通函数的this，严格模式下undefined,非严格模式下是window
+       * 2.new Person() 通过创建不同的实例，来改变this指向
+       * 3.return 语句的使用。 普通函数return后面 有值正常返回，没有值或者没有写return就返回undefined。 构造函数一般不需要使用return,如果返回基本类型值，可以忽略return语句。 如果返回值是引用类型时，会直接返回引用类型本身
+       * 4.箭头函数不能用作构造器，和 new一起用会抛出错误
+       *
+       */
+      //普通函数
+      function foo() {
+        console.log(this); //this 是window
+      }
+
+      //构造函数
+      function Foo() {
+        console.log(this);
+      }
+
+      let t1 = new Foo(); //Foo {}
+      foo(); //this是window
+
+      // 普通函数 有值
+      function person() {
+        return 1;
+      }
+      function person1() {}
+      console.log(person()); // 1;
+      console.log(person1()); // undefined;
+
+      // 构造函数 返回基本类型
+      function Person2(name) {
+        this.name = name;
+        return 1;
+      }
+
+      let p1 = new Person2("rudy");
+      console.log(p1); // Person2 {name: "rudy"}
+
+      // 构造函数 返回引用类型
+      function Person3(name) {
+        this.name = name;
+        return {
+          a: 1,
+        };
+      }
+
+      let p2 = new Person3("rudy");
+      console.log(p2); // {a: 1}
+
+
+      let Bar = ()=>{} //箭头函数不能作为构造器
+    //   let bar = new Bar() //Bar is not a constructor
+
+     function foo1(){
+        return {
+            a:2
+        }
+     }
+
+     console.log(foo1()); //{a: 2}
+
+
+     //手写new 
+     function _new(obj, ...rest){
+        // 基于obj的原型创建一个新的对象
+        const newObj = Object.create(obj.prototype);
+
+        // 添加属性到新创建的newObj上, 并获取obj函数执行的结果.
+        const result = obj.apply(newObj, rest);
+
+        // 如果执行结果有返回值并且是一个对象, 返回执行的结果, 否则, 返回新创建的对象
+        return typeof result === 'object' ? result : newObj;
+
+     }
+
+     function createNew(){
+        let obj = new Object()
+        Constructor = [].shift.call(arguments)
+        obj.__proto__ = Constructor.prototype
+        let result = Constructor.apply(obj, arguments)
+        return typeof result === 'object' ? result : obj;
+     }
+
+     function Supper(name){
+        this.name = name
+        // this.fn = function(){
+        //     console.log(this.name + '我来了')
+        // }
+     }
+
+     Supper.prototype.fn = function(){
+        console.log(this.name + '我来了')
+    }
+
+     let sub = createNew(Supper, 'cat')
+     console.log(sub.name);
+    //  console.log(sub.fn());//没有return 的普通函数，会多打印一个undefined
+     sub.fn()
+
+     let sub1 = _new(Supper, 'big')
+     console.log(sub1.name);
+    //  console.log(sub1.fn());//没有return 的普通函数，会多打印一个undefined
+    sub1.fn()
+
+     
+    </script>
+  </body>
+</html>
