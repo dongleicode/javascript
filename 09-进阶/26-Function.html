@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Function</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        /**
+         * 理解难点：
+         * 1.所有对象都继承自Object
+         * 2.Object、Person本身就是个构造函数，那么他属于Function,通过constructor找到Function
+         * 
+         */ 
+        let fn = new Function()
+        console.log(fn);//ƒ anonymous(){}
+        console.log(fn.__proto__);//ƒ () { [native code] }
+
+
+        console.log(fn.__proto__.__proto__);//指向Object的显式原型，可以访问Object.prototype
+        console.log(fn.__proto__.__proto__ === Object.prototype);//true
+        console.log(Function.prototype === fn.__proto__); //true
+
+        console.log(fn.__proto__.__proto__.__proto__);//null
+        console.log(Function.prototype.__proto__.__proto__);//null
+        
+        
+        
+        
+        function Person(){}
+        console.log(Person.prototype.__proto__ === Function.prototype.__proto__); //true
+
+        console.log(fn.__proto__.__proto__ === Object.prototype);//true
+        console.log(Function.prototype.__proto__ === Object.prototype); //true
+
+
+        //特殊之处
+        console.log(Function.__proto__ === Function.prototype); //true
+        
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>递归</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 
+        递归：函数内部调用函数，必须有停止条件
+     -->
+    <script>
+        function fn() {
+            fn()  //Maximum call stack size exceeded
+        }
+        // fn()
+
+        let i = 0
+        function fn1() {
+            console.log('执行力。。。', i)
+            if(i++ < 10)fn1()
+        }
+        // fn1()  //执行前设置停止条件
+
+        function fn2() {
+            console.log('执行力。。。', i)
+            if(i++ >= 10)return;
+            fn2()
+        }
+        fn2() //退出的时候，停止执行
+
+    </script>
+</body>
+</html>

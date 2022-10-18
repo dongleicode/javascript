@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>构造函数继承</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        function Animal() {
+            this.eat = function(){
+                console.log(this.name, '正在吃。。。');
+            }
+        }
+
+        function Dog(name){
+            this.name = name
+            //调用父类构造函数，并改变this指向
+            // Animal.call(this, arguments)
+            // Animal.apply(this)
+            Animal.bind(this)()
+        }
+
+        new Dog('dog').eat()
+
+        /**
+         * 构造函数继承：子类调用父类构造函数，同时改变this指向
+         * 优点：避免了原型继承，修改会影响共享数据
+         * 缺点：构造函数内的function等属性需要被声明多次
+         * 
+        */
+    </script>
+</body>
+</html>

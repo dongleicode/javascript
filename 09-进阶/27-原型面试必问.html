@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>原型面试必问问题</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        /**
+         * 容易理解的：
+         * 1.对象.__proto__指向构造函数
+         * 2.构造函数.prototype指向原型
+         * 3.原型.constructor指向构造函数
+         * 4.prototype是函数显式原型
+         * 5.__proto__是对象的隐式原型
+         */ 
+
+          /**
+         * 难以理解的：
+         * 1.Object的原型再__proto__就到顶了，就是null
+         *   Object.prototype.__proto__ //null
+         * 2.Object构造函数constructor指向Function
+         *   Object.constructor //f Function(){ [native code] }
+         * 3.Function构造函数的显式原型、隐式原型都指向自身原型
+         *   Function.__proto__ === Function.prototype
+         * 4.任何原型对象的.__proto__，即是向上查找父级原型
+         *   Person.prototype.__proto__ === Object.prototype
+         * 5.
+         */
+    </script>
+</body>
+</html>

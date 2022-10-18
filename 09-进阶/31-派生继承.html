@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>派生继承</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        //派生继承：基于XX生成一个新的
+        function Animal(){}
+        Animal.prototype.eat = function(){
+            console.log(this.name, '正在愉快的吃。。。');            
+            
+        }
+
+        function Dog(name) {
+            this.name = name
+            Animal.call(this) //构造函数继承
+        }
+
+        let newAnimal = Object.create(Animal.prototype)//不用原型链继承
+
+        Dog.prototype = newAnimal
+        Dog.prototype.constructor = Dog
+
+        //测试修改
+        Dog.prototype.a = 123
+        new Dog('小明').eat()
+
+        console.log(new Dog().a); //123
+        console.log(new Animal().a);//undefined
+
+        /**
+         * 避免原型链继承，修改共享数据的缺点
+         * 结合构造函数的继承
+         * 
+        */
+
+    </script>
+</body>
+</html>

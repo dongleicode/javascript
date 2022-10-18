@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>事件委托</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 
+        addEventListener的第三个参数，默认是false，支持冒泡，不支持捕获；
+                                     设置true：支持捕获，不支持冒泡
+        冒泡执行顺序：先子后父
+        捕获执行顺序：先父后子
+     -->
+    <div id="div" style="height: 100px; background: grey;"></div>
+    <script>
+        let dom = document.querySelector('#div')
+        window.addEventListener('click', function(){
+            console.log('window');
+        },false)
+
+        document.addEventListener('click', function(){
+            console.log('document');
+        },true)
+
+        document.body.addEventListener('click', function(){
+            console.log('body');
+        },false)
+
+        dom.addEventListener('click', function(){
+            console.log('div');
+        },true)
+        
+
+        //全部false: div body document window
+        //全部true: window document body div
+        
+
+    </script>
+</body>
+</html>

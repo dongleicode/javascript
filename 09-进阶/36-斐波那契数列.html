@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>菲波那切数列</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    菲波那切数列：
+    1 -> 1 -> 2 -> 3 -> 5 -> 8
+    <script>
+        function thinWaveThatCut(n) {
+            if(n === 1 || n === 2) return 1;
+            return thinWaveThatCut(n-1) + thinWaveThatCut(n-2)
+        }
+
+        console.log(thinWaveThatCut(1)) //1
+        console.log(thinWaveThatCut(2)) //1
+        console.log(thinWaveThatCut(3)) //2
+        console.log(thinWaveThatCut(4)) //3
+        console.log(thinWaveThatCut(5)) //5
+        console.log(thinWaveThatCut(6)) //8
+        
+    </script>
+</body>
+</html>

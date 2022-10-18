@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>闭包</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 
+        闭包：两个相互嵌套的函数，内部函数可以访问外部函数的变量
+        执行时，内部函数就会形成变脸背包，变量不会被释放，造成内存泄漏
+
+        1.函数内部引用外部变量——闭包
+        2.函数随着执行结束出栈销毁引用及闭包，如果函数呗外部持续引用不释放，闭包也持久存在
+        3.内存泄漏：内存中的变量被持久维持，不释放。解决方法：给所有引用到的地方=null，干掉引用，就会被垃圾回收机制回收
+
+     -->
+    <script>
+        function fn() {
+            let b = new Array(2000).fill('green')
+            function Closure() {
+                console.log(b)
+            }
+            // debugger;
+            Closure()
+            return Closure
+        }
+
+        let a = fn()
+        // a()
+        a = null
+    </script>
+</body>
+</html>

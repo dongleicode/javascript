@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>构造函数指向</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        function Person(){}
+        let p1 = new Person()
+        console.log(p1);
+        
+        console.log(p1.__proto__.constructor === Person); //true
+        console.log(p1.constructor === Person);//true
+        console.log(p1.constructor);
+        
+        
+        console.log(Person.prototype.constructor === p1.constructor);//true
+        console.log(Person.constructor === p1.constructor); //false
+        console.log(p1.__proto__.__proto__.__proto__);//null
+        console.log(Person.prototype.__proto__.__proto__); //null
+        
+        
+
+        /**
+         * 实例访问属性时，js底层会根据原型关系自动向上查找
+         * 用的就是__proto__
+         * 
+        */
+    </script>
+</body>
+</html>

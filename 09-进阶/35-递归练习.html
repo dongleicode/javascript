@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>递归练习</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 
+
+     -->
+    <script>
+        //n的阶乘
+        function multiplication(n) {
+            if(n==1) return 1;
+            return n*multiplication(n-1)
+        }
+
+        //n的自然数之和
+        function sum(n) {
+            if(n<=1){ return 1}
+            return n+sum(n-1)
+        }
+
+        console.log(sum(3));
+        console.log(multiplication(5));
+
+
+
+    </script>
+</body>
+</html>

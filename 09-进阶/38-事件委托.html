@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>事件委托</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        //页面所有依赖都加载完毕
+        window.onload = function(){
+            setTimeout(function(){
+                document.body.innerHTML = '<div data-id="1" class="row-data" style="height: 100px; background:grey"></div>'
+            }, 2000)
+
+            document.addEventListener('click', function(event){
+                const ele = event.target; //event.currentTarget
+                if(ele.classList.contains('row-data')){
+                    let id = ele.getAttribute('data-id')
+                    console.log(id)
+                    console.log(ele.style);
+                    // ele.style.cssText = 'height: 100px; background: red;'
+                    ele.style.setProperty('background', 'red')
+                    setTimeout(function(){
+                        ele.remove()
+                    },1500)
+                }
+            })
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>原型</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        function Person(){}
+        /**
+         * 显式原型：构造函数.prototype 访问
+         * 隐式原型：实例.__proto__访问
+         * 原型可以作为继承来提供数据的使用，【js会向上查找】
+         * 
+         */ 
+        Person.prototype.name = '显式原型'
+        let t1 = new Person()
+        t1.__proto__.name = '隐式原型'  //属性重置
+
+        let t2 = new Person()
+
+        console.log(t2.name);//t2查找到原型链上属性
+
+        console.log('name' in t2); //true
+        console.log(Object.keys(Person));//[]
+        console.log(Object.keys(t1));//[]
+
+        
+
+
+    </script>
+</body>
+</html>
