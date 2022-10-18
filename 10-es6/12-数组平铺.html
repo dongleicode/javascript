@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>数组平铺</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        //将下列数组平铺
+        let arr = [1, [2, [3, 4]], 5, 6]
+        //数组平铺的方法：传入几次就是几次，无限次平铺就可以返回一个完整数组
+        let a1 = arr.flat(Infinity)
+        console.log(a1);
+        
+
+        // [].concat(...arr)
+        //手写flat
+        function myFlat(arr){
+            while(arr.some(Array.isArray)){
+                arr = [].concat(...arr)
+            }
+            return arr
+        }
+
+        console.log(myFlat(arr));
+        
+
+
+    </script>
+</body>
+</html>

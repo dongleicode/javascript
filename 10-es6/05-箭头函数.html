@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>箭头函数</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 
+        1.没有形参
+        let obj = ()=> ({a:1})  //返回对象，必须用（）包裹，否则报错
+        2.一个形参
+        let f2 = n => n;  可以圣罗return 传啥返啥
+        2.多个形参
+        let f3 = (n1, n2) => 1+1 可以省略return 返回2
+
+     -->
+    <script>
+        let obj = () => ({a:1})
+        let obj1 = () => {b: 3}
+        let n = () => { return 3};
+        let n1 = () => 4;
+        console.log(obj());
+        console.log(obj1()); //undefined  对象要用（）包裹下
+        console.log(n());
+        console.log(n1()); //4
+
+        let f3 = (n1, n2) => 1+1
+        console.log(f3(3, 4));2
+        
+        let f2 = n => n;
+        console.log(f2()); //undefined
+        console.log(f2(345)); 345
+        
+
+        let res = n => n1 => () => ({a:1})
+        console.log(res(1)(2)());//{a:1}
+        console.log(res()()());
+        
+        //res(1)(2)()
+        //一个参数：箭头左侧小括号可以省略
+        //一行代码：箭头右侧大括号可以省略，建议加上（）
+        //等同于科里化
+        function x(){
+            return function(n){
+                return function(n1){
+                    return {a:1}
+                }
+            }
+        }
+        console.log(x()()());
+        
+
+        
+        
+
+    </script>
+</body>
+</html>

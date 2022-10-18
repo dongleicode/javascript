@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>js进阶</title>
+    <style></style>
+  </head>
+  <body>
+    <script>
+      /***
+      var length = 100;
+      function f1() {
+        console.log(this);
+        console.log(this.length); //100
+      }
+      var obj = {
+        x: 10,
+        f2: function (f1) {
+          f1(); //100,  没有.调用就是window
+          //   console.log(arguments[0]) //this是arguments
+          arguments[0](); //此时的this是arguments 4
+        },
+      };
+
+      obj.f2(f1, 1, 2, 3);
+      //第一个f1是window
+
+
+
+      var number = 1;
+      var obj = {
+        number: 2,
+        showNumber: function () {
+          this.number = 3;
+          (function () {
+            console.log(this.number); //没有被.调用，this就是window
+          })();
+          console.log(this.number); //3    this指向obj
+        },
+      };
+      obj.showNumber();
+      
+      var a = "hello world"; 
+      function f() {
+          console.log( this.a )
+        }
+        var obj = {
+            a: 2,
+            f: f
+        }
+        var f2 = obj.f; //f2是全局的，this指window
+        f2();//hello world
+        obj.f() //2  此时的this指obj
+        
+        
+        */
+
+      function f(something) {
+        console.log(this.a, something);
+        return this.a + something;
+      }
+      var obj = {
+        a: 2,
+      };
+      var f2 = function () {
+        return f.apply(obj, arguments);
+      };
+      var b = f2(3);
+      console.log(b) //5
+
+    </script>
+  </body>
+</html>

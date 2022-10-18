@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>函数参数的解构</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        function f1([a, b, c]) {
+            console.log(a, b, c)
+        }
+        f1([1, 2, 3])
+
+
+
+        function f2({a:{b}}){
+            console.log(a); //a is not defined
+            console.log(b) //66
+        }
+        f2({a:{b:66}})
+
+    </script>
+</body>
+</html>

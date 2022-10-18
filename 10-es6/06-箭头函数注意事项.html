@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>箭头函数注意事项</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 
+        1.箭头函数没有自身的this
+        2.不能成为构造函数
+        3.不能被call、apply、bind,改变this指向
+        4.跟代码级别走，不会根据不同的调用者来改变this指向
+     -->
+    <button id="btn">点击</button>
+    <script>
+        let num = 10;//不会挂在到window, 函数内的局部声明
+        // var num = 9;//会挂在到window，全军声明的变量
+        
+        let obj = {
+            num: 2,
+            init: function(){
+                let that = this
+                btn.onclick = function(){
+                    console.log(that)
+                }
+            },
+            arrow: ()=>{
+                btn.onclick= () => {
+                    console.log(this) //this.num undefined
+                }
+            }
+        }
+        obj.arrow()
+
+        function Animal(){
+            console.log(this)
+        }
+
+        let Person = () => { console.log(this) } //window
+        // new Person()  // Person is not a constructor
+        Person.call(obj) //window
+        
+        Person() //window
+        Animal() //this指向window
+
+        Animal.call(obj) //this 指向obj
+        // Animal()
+
+        let o = {
+            f1: Person,
+            f2: Animal
+        }
+
+        o.f1() //window
+        o.f2() // this 指向 o
+
+
+    </script>
+</body>
+</html>

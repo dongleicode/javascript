@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>参数默认值</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        function fn(x=1, y=1){
+            //避免没有参数，undefined
+            document.elementsFromPoint(x,y)
+        }
+
+        function f1(obj = { a: 1}){
+            let isOk = obj.hasOwnProperty('a')
+            console.log(isOk);//true
+        }
+        f1({a: 2})
+
+        function f2(arr = []) {
+            console.log(arr.slice())
+        }
+
+        f2()
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>解构赋值</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 
+        解构赋值：
+        解构失败：undefined
+
+     -->
+    <script>
+        //数组解构
+        let [a, b, c] = [1, 2, 3]
+        console.log(a,b,c)
+        
+        let [a1, a2, a3 ] = [1, 2];
+        console.log(a1,a2,a3); //1 2 undefined
+
+        let [,,f] = [1, 2, 3]
+        console.log(f); //3
+
+
+        //对象解构
+        let { h, xx } = { h:1, g:2}
+        console.log(h,xx); // 1 undefined
+
+        let { h:x, g:y } = { h:1, g:2}
+        console.log(x, y);  //别名取值,再使用h g就会报错
+
+        //深层解构
+        let { a: { b: { c: { d: { e: innerV } } } } } = { a: { b: { c: { d: { e: 111 } } } } }
+        console.log(innerV); // 111 
+        
+        
+
+    </script>
+</body>
+</html>

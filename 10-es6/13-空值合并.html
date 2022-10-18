@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>空值合并</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        // nullish coalescing operator 空值合并操作符
+        let n1 = 0, n2 = 1, s1 = '', s2 = 'a'
+        let n = n1 ?? false;
+        if(n1 ?? false){
+            console.log('隐式数据类型转换')
+        }
+        console.log(!!n1, n1)  //false 0
+        console.log(!!n2, n2)  //true 1
+        console.log(!!s1, s1)  //false ''
+        console.log(!!s2, s2) //true 'a'
+
+        /**
+         * if判断null 和 undefined 会比较好区分空值
+         * 非空的具体判断值
+         * 具体的值?? es2020 类似 || ，判断范围更小，避免隐式转换
+         * 
+         */ 
+
+         let res = 1
+         let o = res ?? {}
+         console.log(o); //1
+
+         let res2 = 0
+         let o1 = res2 ?? {}
+         console.log(o1); //0
+
+         let res3 = 0
+         let o2 = res3 || {}
+         console.log(o2); //{} 0被转化为boolean
+
+         let res4 = null
+         let o3 = res4 ?? {}
+         console.log(o3); //{}
+
+         let res5 = undefined
+         let o4 = res5 ?? '默认值'
+         console.log(o4); // '默认值'
+         
+         
+         
+         
+         
+
+    </script>
+</body>
+</html>
