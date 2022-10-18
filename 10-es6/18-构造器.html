@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>构造器</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 
+        set map 都既不是数组，也不是对象
+        Set 和 Map都有自动去重功能，后边的会覆盖前面的
+        Set 和 Map集合转数组的方法： Array.from(arr)
+     -->
+    <script>
+        let set = new Set([1, 2, 2,3,3,3, 4])
+        let map = new Map([[1, 2],[3, 4],[3, 'new']])
+
+        //转化为真数组
+        console.log(set);//Set(4) {1, 2, 3, 4
+        let nSet = Array.from(set)
+        console.log(set);//Set(4) {1, 2, 3, 4}
+        console.log(nSet);//(4) [1, 2, 3, 4]
+        console.log(map);//Map(2) {1 => 2, 3 => "new"}
+        let nMap = Array.from(map)
+        // let arr = [1, 2, 3]
+        // console.log(Array.prototype.toString.call(arr));
+        /*
+        (2) [Array(2), Array(2)]
+        0: (2) [1, 2]
+        1: (2) [3, "new"]
+        length: 2
+        __proto__: Array(0)
+        */
+        
+
+
+    </script>
+</body>
+</html>

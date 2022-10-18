@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>set map 数组性能比拼</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 
+        set: 0.0048828125ms
+        map: 0.0048828125ms map底层做了hash算法，会很快（链表就是对象之间通过属性指向形成的关系）
+        arr: 0.56103515625ms
+        obj: 2.98583984375ms
+     -->
+    <script>
+        let obj = {}
+        let arr = new Array(20000).fill(null).map((item, i)=> i +1)
+        let arr2 = new Array(20000).fill(null).map((item, i)=> {
+            obj[i] = i
+            return [i+1, i]
+        })
+        let set = new Set(arr)
+        console.time('set')
+        set.delete(19000)
+        console.timeEnd('set')//set: 0.0048828125ms
+
+        let map = new Map(arr2)
+        // console.log(map);
+        console.time('map')
+        map.delete(19000)
+        console.timeEnd('map')//map 0.00390625ms
+
+        console.time('arr')
+        arr.splice(arr.findIndex((el, i)=> {            
+            return el === 19000
+        }), 1)
+        console.timeEnd('arr')//arr: 0.47265625ms
+
+
+        console.time('obj')
+        for(let i in obj){
+            if(i == 19000){
+                delete obj[i]
+            }
+        }
+        console.timeEnd('obj')//arr: 2
+
+
+
+        
+
+    </script>
+</body>
+</html>

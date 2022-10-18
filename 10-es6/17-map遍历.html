@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>map遍历</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 
+        map底层就是二维数组的表现
+        set复用了map,只不过不让你看key
+     -->
+    <script>
+        let set = new Map()
+        set.set('a', 1)
+        set.set('b', 2)
+        set.set('c', 3)
+        set.set('d', 4)
+
+        //SetIterator
+        console.log(set.entries());
+
+        let obj = {a: 1}
+        console.log()
+        // for(let key of obj){
+        //     console.log(key) //obj is not iterable
+        // }
+        
+        console.log(set.keys());
+        console.log(set.values());
+        let setE = set.entries()
+        console.log(setE);
+        for(let key of set.entries()){
+            console.log(key);
+        }
+
+        for(let v of set.keys()){
+            console.log(v);// a b c d
+        }
+
+        for(let v of set.values()){
+            console.log(v);// 1 2 3 4
+        }
+
+        for(let [key, val] of set){
+            console.log(key, val);
+        }
+
+        set.forEach((v, k) => {
+            console.log(v, k)
+        })
+
+      
+
+    </script>
+</body>
+</html>

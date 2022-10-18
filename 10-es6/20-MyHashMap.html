@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>my hash map</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 
+        需求：通过% 8，分成几个房间
+        每个房间通过链表存储，next指向不同的hashMap
+     -->
+    <script>
+        function MyHashMap() {
+            this.initStore()
+        }
+        MyHashMap.prototype.initStore = function() {
+            this.store = new Array(8)
+            for(let i = 0 ; i < this.store.length; i++){
+                this.store[i] = {}
+                this.store[i].next = null
+            }
+        }
+
+        MyHashMap.prototype.hash = function(n) {
+            return n % this.store.length
+        }
+
+        MyHashMap.prototype.set = function(k, v) {
+            let hashIndex = this.hash(k)
+            let queue = this.store[hashIndex]
+            // console.log(queue)
+
+            while(queue.next){
+                if(queue.next){
+                    if(queue.next.key === k){
+                        queue.next.val = v
+                        return
+                    }else{
+                        queue = queue.next
+                    }
+                }
+            }
+
+            queue.next = {
+                key: k,
+                val: v,
+                next: null
+            }
+        }
+
+        MyHashMap.prototype.get = function(k) {
+            let hashIndex = this.hash(k)
+            let queue = this.store[hashIndex]
+            queue = queue.next
+
+            while(queue){
+                if(queue.key === k){
+                    return queue.val
+                }else{
+                    queue = queue.next
+                }
+            }
+            return undefined
+        }
+
+        let set = new MyHashMap()
+        set.set(1, 'a')
+        set.set(2, 'b')
+        set.set(3, 'c')
+        set.set(4, 'd')
+        set.set(5, 'e')
+        set.set(6, 'f')
+        set.set(9, '99')
+
+        console.log(set);
+        console.log(set.get(3));
+        console.log(set.get(6));
+
+
+    </script>
+</body>
+</html>
