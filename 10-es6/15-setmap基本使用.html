@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>set map基本使用</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 
+        集合
+        1.new Set()
+            类似于数组，底层不同，内部的数据（key）不能重复
+            可以使用任何数据，包括NaN
+            .add() 新增
+            .delete() 删除  返回 true false
+            .has()  是否存在
+            .clear() 一次性清空
+            .size 长度
+
+        2.new Map()
+            等同于Set,但是它多一个key,类似于对象
+            key不能重复
+            .set()新增
+            .get()获取  Set没有get方法
+            .delete()删除
+            .has()
+            .clear()
+            .size
+     -->
+    <script>
+
+        let set = new Set()
+        let addS = set.add('a')
+        set.add('b')
+        set.add('c')
+        set.add('d')
+        console.log(addS, set); //add返回自身
+        console.log(addS === set) //true
+        let delS = set.delete('d') //删除
+        console.log(delS);
+        console.log(set.has('d')); //false
+        console.log(set.has('a')); //true
+        
+        set.add('NaN')
+        // set.clear()        
+        console.log(set.size); //Set(0){}
+
+        let map = new Map()
+        map.set('a', 1)
+        let mapA = map.set('b', 2) //返回自身   
+        map.set('a', 9)  //key不允许重复会覆盖上一次的值
+        console.log(mapA, map);
+        
+        map.set('a', 9)  //
+
+        let mapD = map.delete('a')  //返回true false
+        console.log(mapD, map);
+
+        let mapG = map.get('b')
+        console.log(mapG); //2
+        // map.clear()
+        console.log(map.has('b')); //true
+
+        
+        
+        
+
+        
+
+    </script>
+</body>
+</html>
