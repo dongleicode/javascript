@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>webSocket</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        const ws = new WebSocket("ws://139.196.42.269:8090")
+
+        ws.onopen = function() {
+            console.log('链接成功')
+        }
+
+        ws.onerror = function() {
+            console.log('链接失败')
+        }
+
+        ws.onmessage = function(msg) {
+            console.log(msg)
+        }
+
+        // ws.send(msg)//发送数据
+
+        //ws.close()
+    </script>
+</body>
+</html>
