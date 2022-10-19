@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>WeakMap</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 
+        弱引用
+        WeakMap与Map的区别：不能遍历；key只能为引用数据类型
+        有相同操作方法：
+        set 
+        get 
+        has
+        delete
+
+        *** WeakMap在底层框架中，需要过滤或者存储一些数据对象
+        key为了作为引用数据类型标识的时候可以使用，随着key这个对象本省的内存释放
+        WeakMap无需单独对这个对象的释放进行处理
+        
+     -->
+    <script>
+        let wm = new WeakMap()
+        let o1 = {a: 1}
+        wm.set(o1, 2)
+
+        console.log(wm.forEach) //undefined
+        console.log(wm.entries) //undefined
+        console.log(wm.values); //undefined
+        console.log(wm.keys);   //undefined
+
+        console.log(wm.has(o1));// true
+        console.log(wm.get(o1)); // 2
+        wm.delete(o1)
+        console.log(wm.get(o1)); // undefined
+        console.log(wm.has(o1));// false
+        
+        
+        
+        
+        
+        
+    </script>
+</body>
+</html>

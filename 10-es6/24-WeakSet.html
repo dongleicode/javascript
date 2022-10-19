@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>WeakSet</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 
+        弱引用
+        WeakSet：不能遍历；val只能为引用数据类型
+        有相同操作方法：
+        add
+        has
+        delete
+     -->
+    <script>
+        let wm = new WeakSet()
+        let o1 = {a: 1}
+        wm.add(o1, 2)
+
+        console.log(wm.forEach) //undefined
+        console.log(wm.entries) //undefined
+        console.log(wm.values); //undefined
+        console.log(wm.keys);   //undefined
+
+        console.log(wm.has(o1));// true
+        wm.delete(o1)
+        console.log(wm.has(o1)); // false
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>弱引用</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        function MyObject() {}
+
+        let arr = new Array(20000).fill(null)
+        .map(e => new MyObject())
+
+        //弱引用
+        let ref = new WeakRef(arr); 
+        
+        //console.log会持有引用，不释放内存
+        // console.log(ref.deref());//获取数据
+        
+
+       arr = null
+
+    </script>
+</body>
+</html>

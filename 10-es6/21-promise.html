@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>宏任务和微任务执行顺序</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 
+        microtask微任务： promise  process.nextTick
+        macrotask宏任务: setTimeout setInterval setImmediate I/O
+
+        js的event loop事件循环机制中，有两个必须了解的概念：宏任务和微任务
+
+        当前调用栈执行完毕时，会分两种情况进行处理。
+
+        首先处理微任务队列中的事件，然后再从宏任务队列中取出一个事件并执行。
+
+        在同一次事件循环中，微任务永远在宏任务之前执行。
+
+        以下程序执行顺序：
+        start
+        promise 1
+        promise 2
+        setInterval
+        setTimeout 1
+        promise 3
+        promise 4
+        setInterval
+        setTimeout 2
+        promise 5
+        promise 6
+
+        解析：
+        循环1：setInterval被列为宏任务。setTimeout 1被列为宏任务。Promise.resolve 1中的then方法被列为微任务。  
+              微任务先执行：
+                  promise 1
+                  promise 2
+              任务队列里有两个宏任务：
+                  setInterval
+                  setTimeout 1
+                  
+        循环2：微任务队列被清空，setInterval的回调可以执行，另一个setInterval被列为宏任务，位于setTimeout 1之后。
+               任务队列里有两个宏任务：
+                   setTimeout 1
+                   setInterval
+
+        循环3：微任务队列被清空，setTimeout 1的回调可以执行，promise 3和promise 4被列为微任务。promise 3和promise 4执行，setTimeout 2被列为宏任务。
+               任务队列里有两个宏任务：
+                   setInterval
+                   setTimeout 2
+
+        循环4：微任务队列被清空，setInterval的回调可以执行，然后另一个setInterval被列为宏任务，位于setTimeout 2后边。setTimeout 2的回调执行，promise 5和promise 6被列为微任务。
+               任务队列里有两个任务：
+                   setTimeout 2
+                   setInterval
+
+        promise 5和promise 6的回调执行，接着清空了interval.不再执行
+
+        
+    
+     -->
+    <script>
+        console.log('start');
+        
+        const interval = setInterval(() => {
+            console.log('setInterval')
+        }, 0)
+
+        setTimeout(()=>{
+            console.log('setTimeout 1');
+            Promise.resolve()
+                .then(() => {
+                    console.log('promise 3')
+                })
+                .then(() => {
+                    console.log('promise 4')
+                })
+                .then(() => {
+                    setTimeout(() => {
+                       console.log('setTimeout 2')
+                       Promise.resolve()
+                          .then(() => {
+                              console.log('promise 5')
+                          })
+                          .then(() => {
+                              console.log('promise 6')
+                          })
+                          .then(() => {
+                              clearInterval(interval)
+                          })
+                    },0)
+                })
+        }, 0)
+        
+        Promise.resolve()
+            .then(() => {
+                console.log('promise 1')
+            })
+            .then(() => {
+                console.log('promise 2')
+            })
+
+        
+
+    </script>
+</body>
+</html>

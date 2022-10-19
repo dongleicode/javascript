@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Iterator</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        let obj = {a:1, b:2, c: 3}
+        let arr = [1, 2, 3]
+
+        for(let v of arr){
+            console.log(v)
+        }
+
+        //标识：Symbol.iterator = function
+        //指针下移 + 是否done的方法
+        let i = 0
+        obj.__proto__[Symbol.iterator] = function(){
+            let keys = Object.keys(this)
+            let ens = Object.entries(this)
+            ens.reverse()//对象数据反转
+            console.log(Object.entries(this));
+            
+            return {
+                //指针下移
+                next:()=>{
+                    return{
+                        //当前值
+                        value: ens[i++],
+
+                        //是否完结
+                        done: i > ens.length
+                    }
+                }
+            }
+        }
+        for(let v of obj){ //obj is not iterable
+            console.log(v)
+        }
+
+    </script>
+</body>
+</html>

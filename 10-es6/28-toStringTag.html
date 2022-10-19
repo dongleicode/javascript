@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>toStringTag</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        function type(s){
+            return Object.prototype.toString.call(s)
+        }
+
+        console.log(type(1)); //[object Number]
+
+        function Person(){}
+        let obj = new Person()
+
+        //底层重写类型标签的属性：toStringTag
+        //原型：Person.prototype.[Symbol.toStringTag] = 'Person'
+        Person.prototype[Symbol.toStringTag] = Person.name
+        console.log(Person.prototype[Symbol.toStringTag]);//Person
+        console.log(Symbol.toStringTag);//Symbol(Symbol.toStringTag)
+        //Symbol.toStringTag  Symbol常量就是用来做类型处理的
+        console.log(type(obj)); //[object Person]
+
+        
+        
+        
+
+
+    </script>
+</body>
+</html>

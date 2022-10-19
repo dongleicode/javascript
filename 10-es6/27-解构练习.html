@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>解构练习</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        //1.
+        const fun = ( { a = 1, b = 1} = {}) => [a, b]
+        console.log(fun({a:10, b:10}))  // [10, 10]
+        console.log(fun({a:10})) // [10, 1]
+        console.log(fun({})) //[1, 1]
+        console.log(fun())//[1, 1]
+
+        //2.
+        const fun1 = ( {x,y} = {x:1, y:1}) => [x, y]
+        console.log(fun1({x:10, y:10}))  // [10, 10]
+        console.log(fun1({x:10})) // [10, undefined]
+        console.log(fun1({})) //[undefined, undefined]
+        console.log(fun1())  // [1, 1]
+
+        
+
+
+
+
+    </script>
+</body>
+</html>

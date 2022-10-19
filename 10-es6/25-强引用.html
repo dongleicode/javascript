@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>强引用</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        function MyObject() {}
+
+        let arr = new Array(20000).fill(null)
+        .map(e => new MyObject())
+
+        //强引用
+        let ref = arr; //浅拷贝：栈内存地址，指向用一个堆内存
+        
+        //释放内存
+        arr = null
+
+        ref = null
+
+    </script>
+</body>
+</html>
