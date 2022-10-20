@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>promise后续函数处理</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 
+        console.log(1);
+        let p1 = new Promise((rs, rj) => {
+            console.log(2);
+            
+        })
+        console.log(3);
+
+        执行顺序：1 2 3
+
+
+     -->
+    <script>
+        console.log(1);
+        let p1 = new Promise((resolve, reject) => {
+            console.log(2);
+            resolve('ok') //fulfilled 存储的状态都是 ok
+        })
+
+        p1.then((data) => {//主线程执行完之后，才执行异步
+            console.log(3);
+            //fulfilled 存储的状态都是 ok
+            console.log(5, data) //ok
+        })
+        p1.then((data) => {
+            //fulfilled 存储的状态都是 ok
+            console.log(6, data) //ok
+
+            //给后续的新promise传递数据
+            return 7
+        })//返回一个新的promise
+        .then((data) => {
+            console.log(data, 'then之后的.then')//没有上一步的return 1, 就是undefined
+        })
+
+        console.log(4);
+
+
+
+
+
+
+        
+
+
+
+    </script>
+</body>
+</html>

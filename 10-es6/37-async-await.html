@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>async await</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 
+        let next
+        function req() {
+            return new Promise((r,j) => {
+                next = r
+            })
+        }
+
+        async function fn(){
+            console.log(1);
+            const res = await req()
+            console.log(2, res);
+        }
+
+        fn()
+        setTimeout(() => {
+            next('a')
+        },2000)
+     -->
+    <script>
+        let next
+        function req() {
+            return new Promise((r,j) => {
+                setTimeout(() => {
+                    r('a')
+                },2000)
+            })
+        }
+
+        async function fn(){
+            console.log('s2');
+
+            console.log(1);  //同步代码
+            const res = await req()  
+            console.log(2, res); //异步代码
+        }
+
+        console.log('s1');
+        fn()
+        console.log('s3');
+
+    </script>
+</body>
+</html>

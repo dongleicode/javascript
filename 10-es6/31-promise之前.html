@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>promise</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        function req(callback) {
+            setTimeout(()=>{
+                const data = Math.random()
+                callback(data)
+            },1000)
+        }
+
+        req(function(data){
+            console.log('1:',data);
+            req(function(data){
+                console.log('2:',data);
+                req(function(data){
+                    console.log('3:',data);
+                })
+            })
+        })
+
+        /*
+        回调地狱：
+        1: 0.6473892425891599
+        2: 0.19107974161680596
+        3: 0.22244389990289037
+        */
+    </script>
+</body>
+</html>

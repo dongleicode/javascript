@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>异常和最终处理</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+         function req() {
+            return new Promise((r, j)=>{
+                setTimeout(() => {
+                    const data = Math.random()
+                    // console.log(data)
+
+                    if(data > 0.1){
+                        r(data)
+                    }else{
+                        j(data)
+                    }
+                }, 500)
+            })
+        }
+
+
+        async function start(){
+            try{
+                var res = await req()
+            }catch(e){
+                console.log('异常');
+            }finally{
+                console.log('最终', res);
+            }
+        }
+
+        start() //start
+    </script>
+</body>
+</html>

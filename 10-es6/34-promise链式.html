@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Promise链式</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 
+        解决嵌套回调地狱
+     -->
+    <script>
+        console.log('sync1');
+
+        function req() {
+            // console.log(1)
+            return new Promise((r, j)=>{
+                // console.log(2)
+                setTimeout(() => {
+                    // console.log(4)
+                    const data = Math.random()
+                    console.log(data)
+
+                    if(data > 0.1){
+                        r(data)
+                    }else{
+                        j(data)
+                    }
+                }, 500)
+            })
+        }
+
+
+        console.log('sync2');
+        
+        // req()
+        // .then((num1) => {
+        //     console.log('异步1：',num1)
+        //     return req() //对应35行的num2
+        // })
+        // .then((num2) => {
+        //     console.log('异步2：',num2)
+        //     return req()//对应39行的num3
+        // })
+        // .then((num3) => {
+        //     console.log('异步3：',num3)
+        // })
+        // .catch(err => {
+        //     console.log('异常：', err)
+        // })
+        // .finally(() => {
+        //     console.log('over')
+        // })
+        // console.log(3)
+        // console.log('sync3');
+
+
+        req().then(req).then(req).then(req).then(req)
+
+    </script>
+</body>
+</html>

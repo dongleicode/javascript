@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>promise基本使用</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 
+        Promise是一个异步容器
+        作用：控制执行流程，保证数据流转
+        初始：pending  
+        已解约：resolve  fulfilled
+        已拒绝：reject   rejected
+
+     -->
+    <script>
+        
+        function req(callback){
+            return new Promise((resolve, reject)=>{
+                setTimeout(()=>{
+                    const data = Math.random()
+                    if(data > 0.5) resolve(data)
+                    else reject('error')
+                },1000)
+            })
+        }
+
+        let p1 = req()
+        console.log(p1); //fulfilled
+
+        let p2 = new Promise(()=>{})
+        let p3 = new Promise((r, j)=>r())
+        let p4 = new Promise((r, j)=>j())
+        console.log(p2) //pending
+        console.log(p3) //fulfilled
+        console.log(p4) //rejected
+
+
+
+    </script>
+</body>
+</html>

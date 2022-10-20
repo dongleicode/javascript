@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>promise API</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!--
+        Promise.all()  所有请求成功，才返回，否则报错
+        Promise.race()  有一个成功就返回；都不返回，报错
+
+      -->
+
+    <script>
+        function req() {
+            return new Promise((r, j)=>{
+                setTimeout(() => {
+                    const data = Math.random()
+                    // console.log(data)
+
+                    if(data > 0.1){
+                        r(data)
+                    }else{
+                        j(data)
+                    }
+                }, 500)
+            })
+        }
+
+
+        // [0.5107686172306665, 0.7783149958276361, 0.7791892897927]
+        // Promise.all([req(), req(), req()])
+        // .then(data=>{
+        //     //所有都成功
+        //     console.log(data)
+        // })
+        // .catch(err=>{
+        //     //一个都不成功
+        //     console.log('失败')
+        // })
+
+
+        // Promise.race([req(), req(), req()])
+        // .then(data=>{
+        //     //一个成功就返回
+        //     console.log(data)
+        // })
+        // .catch(err=>{
+        //     //不成功
+        //     console.log('失败')
+        // })
+
+
+        Promise.resolve('xxx') //fulfilled, 容器状态是成功，就不会走.catch
+        .then(data => {
+            console.log(data)
+        })
+        .catch(err=>{
+            //不成功
+            console.log('失败')
+        })
+
+        Promise.reject('xxx') //rejected, 容器状态是失败，就不会走.then
+        .then(data => {
+            console.log(data)
+        })
+        .catch(err=>{
+            //不成功
+            console.log('失败', err)
+        })
+
+
+
+    </script>
+</body>
+</html>

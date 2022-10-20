@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>forEach的阻塞问题</title>
+    <style></style>
+  </head>
+  <body>
+    <script>
+      function req(num) {
+        return new Promise((r, j) => {
+          setTimeout(() => {
+            const data = Math.random();
+            r(data+num)
+          }, 500);
+        });
+      }
+
+      let arr = [1, 2, 3, 4]
+      arr.__proto__.forEach_new = async function(fn){
+        for(let i = 0; i < this.length; i++){
+            await fn(this[i])
+        }
+      }
+
+    //   arr.forEach(async function test(n){
+    //     //阻塞失败
+    //     let res = await req(n)
+    //     console.log(res);
+    //   })
+      //第一种
+    //   arr.forEach_new(async function test(n){
+    //     let res = await req(n)
+    //     console.log(res);
+    //   })
+
+        //第二种：
+      async function test(n){
+        let res = await req(n)
+        console.log(res);
+      }
+
+      async function start(){
+        await test(1)
+        await test(2)
+        await test(3)
+        await test(4)
+      }
+    //   start()
+
+
+    //第三种
+    async function start1(){
+        for(let i = 0; i < arr.length; i++){
+            let res = await req(i)
+            console.log(res);
+        }
+    }
+    // start1()
+
+
+    // 第四种：
+    // (async function(){
+    //     for(let i = 0; i < arr.length; i++){
+    //         let res = await req(i)
+    //         console.log(res);
+    //     }
+    // })()
+
+
+
+    </script>""
+  </body>
+</html>

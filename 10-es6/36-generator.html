@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>generator</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!--         
+        iterator: 迭代器
+
+        generator: 生成器，和迭代器有点类似  16-18年才有，nodejs用的多
+     -->
+    <script>
+        
+        function* fn(){
+            console.log(1);
+            const r1 = yield 'work'
+            console.log(2, r1)
+            const r2 = yield 'now'
+            console.log(3, r2)
+        }
+
+        //返回的是一个生成器
+        let gen = fn()
+        console.log(gen)
+
+        //调用next()执行一步
+        let res = gen.next()  //1 包含下一步的yield 'work'
+        console.log(res);//{value: "work", done: false}
+
+        let res2 = gen.next(res.value)  //2  res.value不传参就是undefined
+        console.log(res2); //{value: "now", done: false}
+
+    </script>
+</body>
+</html>

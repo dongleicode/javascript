@@ -21,6 +21,7 @@
         //标识：Symbol.iterator = function
         //指针下移 + 是否done的方法
         let i = 0
+        //将对象转化为迭代器 for in
         obj.__proto__[Symbol.iterator] = function(){
             let keys = Object.keys(this)
             let ens = Object.entries(this)
