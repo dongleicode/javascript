@@ -7,6 +7,11 @@
     <title>defineProperty</title>
 </head>
 <body>
+    Object.defineProperty:<input type="text" id="text1"><br/>
+    user.name:<div id="obj1"></div><br/>
+    new Proxy:<input type="text" id="text2"><br/>
+    proxyObj.name:<div id="obj2"></div><br/>
+    <div></div>
     <script>
         let user = {
             name: 'defineProperty',
@@ -17,7 +22,6 @@
         }
 
         let list = [1, 2]
-
         Object.keys(user).forEach(key => {
             let oldV = user[key]
             Object.defineProperty(user, key, {
@@ -27,6 +31,8 @@
                 },
                 set(val){
                     console.log('%c 调用set', 'color: red',`修改${key}属性：${val}`)
+                    text1.value = val  //改变input
+                    changeDom1(val)   //改变dom
                     oldV = val
                 }
             })
@@ -44,7 +50,6 @@
             })
         })
 
-
         // user.obj.age
         // list[6] = 6
         // list[0] = 4
@@ -55,15 +60,26 @@
         // user.age = 23
         // console.log(list)
 
+        //input输入数据改变
+        text1.oninput = function(e) {
+            user.name = e.target.value;
+        }
+
+        //dom数据改变
+        function changeDom1(str) {
+            obj1.innerHTML = str
+        }
 
 
+        
+        
 
         let data = {
             name: 'proxy',
             age: 18
         }
-
-        const proxyObj = new Proxy(user, {
+        let user2 = JSON.parse(JSON.stringify(user))
+        const proxyObj = new Proxy(data, {
             //拦截读取操作
             get(target, prop){//对象，调用属性名
                 console.log('%c 调用get', 'color: green', target, prop)
@@ -73,6 +89,8 @@
             //拦截设置操作
             set(target, prop, value){
                 console.log('%c 调用set', 'color: blue', target, prop, value)
+                text2.value = value  //改变input
+                changeDom2(value)   //改变dom
                 return Reflect.set(target, prop, value)
             },
             deleteProperty(target, prop){
@@ -81,10 +99,18 @@
                 return true
             }
         })
-
+        
         // proxyObj.obj.age = 89
         // console.log(proxyObj);
-        
+        text2.oninput = function(e) {
+            proxyObj.name = e.target.value;
+        }
+
+        //dom数据改变
+        function changeDom2(str) {
+            obj2.innerHTML = str
+        }
+
 
 
 

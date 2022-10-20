@@ -33,3 +33,18 @@
                 自然会比 proxy 对整个对象进行监听的方式要耗性能。
 
     6、相同点：不支持深层嵌套
+
+## 总结：proxy和defineProperty对比
+    
+|名称|set|get|add|delete|apply|性能|
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+|defineProperty|是|是|否|否|否|快|
+|proxy|是|是|是|是|是|慢|
+
+    备注：
+    【1】proxy还能够检测到更多对象相关的操作，比如构造函数被调用
+    【2】在nodejs x个版本下， 执行多次defineProperty 和proxy,proxy慢了30倍
+    【3】为了继续使用响应式，在vue2.x中额外增加和删除的属性需要使用 Vue.set(对象，添加的key,添加值)
+    【4】【虽然单个API有性能差距，但是到Vue3中，可以利用Proxy带来的便利，在其他方面大幅提
+    升性能】
+

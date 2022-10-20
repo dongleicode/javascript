@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>class</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 
+
+     -->
+    <script>
+        //构造函数
+        function Man(name) {
+            this.age = 20
+            this.name = name
+        }
+        Man.type = '男人'
+
+
+        //类
+        class Woman{
+            age= 18
+            static type = '女人'
+            constructor(name){
+                this.name = name
+            }
+        }
+
+
+        let m = new Man('bill')
+
+        let n = new Woman('sherry')
+
+        console.log(m, n) //实例属性
+        //Man {age: 20, name: "bill"}
+        //Woman {age: 18, name: "sherry"}
+
+        //静态属性
+        console.log(Man.type) //男人
+        console.log(Woman.type) //女人
+
+
+
+    </script>
+</body>
+</html>

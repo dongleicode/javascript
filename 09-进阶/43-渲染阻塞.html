@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>渲染阻塞</title>
+    <style></style>
+  </head>
+  <body>
+    <input type="text" value="123" />
+    <button id="syn1">同步阻塞</button>
+    <button id="syn2">微任务阻塞</button>
+    <button id="syn3">宏任务阻塞</button>
+    <script>
+      // 同步阻塞
+      document.querySelector("#syn1").onclick = function () {
+        while (true) {
+            console.log('同步阻塞。。。')
+        }
+      };
+
+      // 微任务阻塞
+      function micro() {
+        Promise.resolve("ok").then((data) => {
+            console.log("执行微任务了！！");
+          micro();
+        });
+      }
+      document.querySelector("#syn2").onclick = function () {
+        micro();
+      };
+
+      function macro() {
+        setTimeout(() => {
+          console.log("执行宏任务了！！");
+          macro();
+        }, 0);
+      }
+      document.querySelector("#syn3").onclick = function () {
+        macro();
+      };
+    </script>
+  </body>
+</html>

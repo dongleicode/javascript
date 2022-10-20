@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script>
+        // ES5 实现Reflect
+        // function Reflect(){}
+        // Reflect.get = function(){}
+
+        // // ES? 实现Reflect
+        // class Reflect {
+        //     static get() {}
+        //     static set() {}
+        // }
+
+
+
+        let obj = {a:'xxx'};
+        let p = new Proxy(obj, {
+            get(target, propKey, receiver) {
+                console.log('get')
+                return Reflect.get(target, propKey)
+
+            },
+            set(target, propKey, value, receiver) {
+                console.log('set')
+                return Reflect.set(target, propKey, value)
+
+            },
+            has(target, propKey) {
+                console.log('has')
+                return Reflect.has(target, propKey)
+
+            },
+            deleteProperty(target, propKey) {
+                console.log('deleteProperty')
+                return Reflect.deleteProperty(target, propKey)
+
+            },
+            ownKeys(target) {
+                console.log('ownKeys')
+                return Reflect.ownKeys(target)
+
+            },
+            getOwnPropertyDescriptor(target, propKey) {
+                console.log('getOwnPropertyDescriptor')
+                return Reflect.getOwnPropertyDescriptor(target, propKey)
+
+            },
+            defineProperty(target, propKey, propDesc) {
+                console.log('defineProperty')
+                return Reflect.defineProperty(target, propKey, propDesc)
+
+            },
+            preventExtensions(target) {
+                console.log('preventExtensions')
+                return Reflect.preventExtensions(target)
+
+            },
+            getPrototypeOf(target) {// 不同
+                console.log('getPrototypeOf')
+                return Reflect.getPrototypeOf(target)
+
+            },
+            isExtensible(target) {
+                console.log('isExtensible')
+                return Reflect.isExtensible(target)
+
+            },
+            setPrototypeOf(target, proto) {
+                console.log('setPrototypeOf')
+                return Reflect.setPrototypeOf(target, proto)
+
+            },
+            
+        });
+
+        // // ====
+        p.a;
+        p.plus = '附加属性';
+        'a' in p;
+        delete p.plus;
+        Object.getOwnPropertyNames(p)
+        Object.getOwnPropertyDescriptor(p, 'a')
+        Object.defineProperty(p,'c',{
+            value:'ccc'
+        });
+        Object.getPrototypeOf(p)
+        Object.isExtensible(p)
+        Object.setPrototypeOf(p,{})
+        Object.preventExtensions(p); // 放最后, 不然97上面无法设置
+        
+        console.log('下方是函数的操作')
+        let Person = function(){
+            console.log('1111');
+        }
+        
+        let proxyFn = new Proxy(Person,{
+            apply(target, object, args) {
+                console.log('apply')
+                return Reflect.apply(target, object, args)
+
+            },
+            construct(target, args) {
+                console.log('construct')
+                return Reflect.construct(target, args)
+
+            },
+        });
+        proxyFn.call({});  
+        // bind没有 因为bind是返回一个新函数,
+        // 把新函数进行proxy
+        new proxyFn();
+    </script>
+</body>
+</html>

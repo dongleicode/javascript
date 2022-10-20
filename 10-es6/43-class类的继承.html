@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>类的继承</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 
+        class 类的继承
+     -->
+    <script>
+        class Animal {
+            food = 'milk'
+            eat(){
+                console.log(this.name + '正在吃...'+this.food)
+            }
+            constructor(food){
+                this.food = food
+            }
+        }
+
+        //只支持单继承
+        class Dog extends Animal{
+            constructor(name,food){ //构造器做数据的初始化
+                super(food) //子类构造前，先让父类实例化，等同于父类的constructor。否则报错：ReferenceError: Must call super constructor in derived class before accessing 'this' or returning from derived constructor
+                this.name = name
+            }
+        }
+
+        new Dog('小狗', 'banana').eat()
+
+    </script>
+</body>
+</html>

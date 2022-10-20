@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>amd cmd umd</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 
+        AMD:前置引入模块  require.js
+            09年左右的require.js 底层原理是通过ajax请求文件
+            声明前置引入
+           define("Green", ["./dep1", "./dep2"], function(d1, d2) {
+                return returnValue;
+            });
+            require(["Green", "../file"], function(module, file) { /* ... */ });
+
+        CMD:按需加载  sea.js
+            define(function(require, exports, module) {
+                var $ = require('jquery');
+                var Spinning = require('./spinning');
+                exports.doSomething = ...
+                module.exports = {}
+            })
+
+        UMD:排除AMD/CMD
+            ((root, factory) => {
+                if (typeof define === 'function' && define.amd) {
+                    //AMD
+                    define(['jquery'], factory);
+                } else if (typeof exports === 'object') {
+                    //CommonJS
+                    var $ = requie('jquery');
+                    module.exports = factory($);
+                } else {
+                    //都不是，浏览器全局定义
+                    root.testModule = factory(root.jQuery);
+                }
+                })(this, ($) => {
+                    //do something... 这里是真正的函数体
+            }); 
+
+       CommonJS 模块定义最佳实现
+            node.js
+            require, exports, module 内置
+     -->
+    <script>
+        
+    </script>
+</body>
+</html>
