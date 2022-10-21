@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>new</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        //构造函数
+        function Person(name) {
+            this.name = name
+            console.log(this)
+        }
+
+        let p1 = new Person("rudy"); // this 是 Person {name: 'rudy'}
+        let p2 = new Person("kobe"); // this 是 Person {name: 'kobe'}
+
+        //手写new
+        function createNew() {
+            // 创建个对象
+            var obj = new Object();
+            // 获取第一个参数,既传入的构造函数
+            Constructor = [].shift.call(arguments);
+            // 将obj的原型指向Constructor(构造函数)，这样obj就可以访问到构造函数原型中的属性
+            obj.__proto__ = Constructor.prototype;
+            // 使用 apply，改变构造函数 this 的指向到新建的对象，这样 obj 就可以访问到构造函数中的属性
+            var ret = Constructor.apply(obj, arguments);
+            // 返回obj对象
+            return typeof ret === "object" ? ret : obj;
+        }
+
+        Person.prototype.sayName = function() {
+         console.log("this is " + this.name);
+        };
+
+        let person = createNew(Person, "rudy");
+
+        console.log(person.name); // rudy;
+        person.sayName(); // this is rudy;
+    </script>
+</body>
+</html>
