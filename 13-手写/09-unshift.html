@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>unshift</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 
+        unshift：在数组开头插入元素
+     -->
+    <script>
+        let arr = [1, 2, 3]
+        function unshift() {
+            let len1 = arguments.length
+            let len2 = this.length
+            for(let i = len1 + len2; i > 0; i--){
+                this[i - 1] = this[i - len1 - 1]
+            }
+            for(let x = 0; x < len1; x++){
+                this[x] = arguments[x]
+            }
+            return this.length
+        }
+        Array.prototype.newUnshift = unshift
+
+        arr.newUnshift(4)
+        arr.newUnshift(5, 6, 7)
+        arr.newUnshift([8,9])
+        console.log(arr) //(8) [Array(2), 5, 6, 7, 4, 1, 2, 3]
+    </script>
+</body>
+</html>
