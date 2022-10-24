@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>proxy</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        let target = {
+            name: 'proxy',
+            _age: 21
+        }
+        let handle = {
+            get(target, key){
+                let oldV = target[key];
+                console.log(`获取${oldV}`);
+                if(key.includes('_')){
+                    return '无可奉告'
+                }
+                return target[key]
+            },
+            set(target, key, newV){
+                if(key.includes('_')){
+                    return 21
+                }
+                console.log(`${key}设置为${newV}`);
+                target[key] = newV
+            }
+        }
+        let proxy = new Proxy(target, handle)
+        // proxy.name = 'bill'
+        proxy._age = 30
+        console.log(proxy)
+
+
+    </script>
+</body>
+</html>
