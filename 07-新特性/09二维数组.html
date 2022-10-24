@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>二维数组</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 
+        矩阵
+        二维数组，数组的数组
+     -->
+    <script>
+        let a = []
+        a[0] = []
+        a[0][0] = 71
+        a[0][1] = 72
+        a[0][2] = 73
+        a[0][3] = 74
+
+        a[1] = []
+        a[1][0] = 75
+        a[1][1] = 76
+        a[1][2] = 77
+        a[1][3] = 78      
+          console.table(a)
+
+
+        function printMatrix(arr){
+            for (let i = 0; i< arr.length; i++){
+                for (let j = 0; j < arr[i].length; j ++){
+                    console.log(arr[i][j])
+                }
+            }
+        }
+
+        printMatrix(a)
+
+        const arrx3x3x3 = []
+        for(let i = 0; i< 3; i++){
+            arrx3x3x3[i] = []
+            for(let j = 0; j < 3; j++){
+                arrx3x3x3[i][j] = []
+                for(let z= 0; z < 3; z++){
+                    arrx3x3x3[i][j][z] = i + j + z
+                }
+            }
+        }
+
+        console.table(arrx3x3x3)
+
+        let arr1 = [1, 2, 3, 4]
+
+        let n1 = Array.from(arr1)
+        console.log(n1)
+
+        let n2 = Array.from(arr1 , x => (x%2 == 0))
+        console.log(n2)
+
+        let n3 = Array.of(1)
+        console.log(n3)
+
+        let n4 = Array.of(1,2,3,4)
+        console.log(n4);//(4) [1, 2, 3, 4]
+        
+
+        let n5 = Array.of(...arr1)
+        console.log(n5);//(4) [1, 2, 3, 4]
+
+        // n5.fill(0)
+        // console.log(n5);//(4) [0, 0, 0, 0]
+
+        // n5.fill(2, 1)//数组从1开始，都是2
+        // console.log(n5); //(4) [1, 2, 2, 2]
+
+        // n5.fill(3, 1, 3)//索引1到3，都是3，不包括索引3
+        // console.log(n5);//(4) [1, 3, 3, 4]
+
+
+        let n6 = Array(6).fill(1)
+        console.log(n6);//(6) [1, 1, 1, 1, 1, 1]
+
+        let copyArr = [1, 2, 3, 4, 5, 6]
+        // copyArr.copyWithin(0, 3) //索引3到最后一位之间的元素，复制到索引0开始
+        // console.log(copyArr);//(6) [4, 5, 6, 4, 5, 6]
+
+        copyArr.copyWithin(1, 3, 4) //索引3到4之间的元素，复制到索引1开始
+        console.log(copyArr);//(6) [1, 4, 3, 4, 5, 6]
+
+        let n7 = [1, 10, 8, 9, 4, 5, 7, 6, 2, 3]
+
+        n7.sort((a, b) => a-b)
+        console.log(n7); //(10) [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]  正序
+        
+        n7.sort((a, b) => b-a)
+        console.log(n7); //(10) [10, 9, 8, 7, 6, 5, 4, 3, 2, 1] 倒序
+
+
+        const friends = [
+            {name: 'john', age: 30},
+            {name: 'Ana', age: 12},
+            {name: 'Dali', age: 20},
+            {name: 'bill', age: 2}
+        ]
+
+        function comparePerson(a, b) {
+            if(a.age < b.age){
+                return -1
+            }
+            if(a.age > b.age){
+                return 1
+            }
+            return 0
+        }
+
+        let newF = friends.sort(comparePerson)
+        console.log(newF);
+
+        // (4) [{name: "bill", age: 2}, {name: "Ana", age: 12},{name: "Dali", age: 20},{name: "john", age: 30}]
+        
+
+
+        let names = ['Ana', 'ana', 'join', 'Join']
+
+        names.sort()//按照ASCII排序
+        console.log(names) //(4) ["Ana", "Join", "ana", "join"]
+
+        names.sort((a, b) => a.localeCompare(b))
+        console.log(names); //(4) ["ana", "Ana", "join", "Join"]
+
+        let n8 = [1, 2, 3, 13, 14]
+        function m13(el, index, array) {
+            return (el % 13 == 0)
+        }
+
+        console.log(n8.find(m13)); //13  //根据回调函数，返回值
+        console.log(n8.findIndex(m13)); //3 //根据回调函数，返回索引
+
+        //includes(n1, n2) n1是否包含这个值，n2：起始索引
+
+        console.log(n8.includes(1)) //true
+        console.log(n8.includes(1, 1)) //false
+
+        
+
+
+
+
+        
+        
+
+    </script>
+</body>
+</html>
