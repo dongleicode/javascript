@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>setTimeout</title>
+    <style></style>
+  </head>
+  <body>
+    <script>
+      for (var i = 1; i <= 3; i++) {
+        setTimeout(function () {
+          console.log(i);
+        }, 0);
+      }
+      //3个4
+      /**
+       * 解释：
+            虽然 setTimeout的时长是0，但是，也是启动了异步操作，而JavaScript本身是单线程的。
+            所以，setTimeout的回调函数的代码（console.log(i)）必须等到循环执行完毕后再执行。
+            即：
+            循环过程中，启动线程，进行排队，等到for循环执行完毕后，再执行队列里的代码（console.log(i)）
+       * 
+       */
+      for (let i = 1; i <= 3; i++) {
+        setTimeout(function () {
+          console.log(i);
+        }, 0);
+      }
+      //结果是 1,2,3
+      //这是因为let值块级作用域，i的值会在每个块里进行保存
+
+      //setTimeout第二个参数不传，默认0
+      for (var i = 1; i <= 3; i++) {
+        setTimeout(function () {
+          console.log(i);
+        });
+      }
+      //3个4
+
+      setInterval(() => {
+        //   console.log(new Date().toLocaleTimeString())
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NewPromise</title>
+    <style></style>
+  </head>
+  <body>
+    <script>
+      // 自定义NewPromise函数模块: IIFE
+      (function (window) {
+        const PENDING = "pending";
+        const RESOLVED = "fulfilled";
+        const REJECTED = "rejected";
+
+        // NewPromise构造函数
+        // executor: 执行器函数（同步执行）
+        function NewPromise(executor) {
+          const self = this;
+          self.status = PENDING;
+          self.data = undefined;
+          self.callbacks = [];
+
+          function resolve(value) {
+            if (self.status !== PENDING) {
+              return;
+            }
+
+            self.status = RESOLVED;
+            self.data = value;
+            if (self.callbacks.length > 0) {
+              setTimeout(() => {
+                self.callbacks.forEach((callbacksObj) => {
+                  callbacksObj.onResolved(value);
+                });
+              }, 0);
+            }
+          }
+
+          function reject(reason) {
+            if (self.status !== PENDING) {
+              return;
+            }
+
+            self.status = REJECTED;
+            self.data = reason;
+            if (self.callbacks.length > 0) {
+              setTimeout(() => {
+                self.callbacks.forEach((callbacksObj) => {
+                  callbacksObj.onRejected(reason);
+                });
+              }, 0);
+            }
+          }
+
+          try {
+            executor(resolve, reject);
+          } catch (error) {
+            reject(error);
+          }
+        }
+
+        // NewPromise原型对象的then(),指定成功和失败的回调函数，返回一个新的NewPromise对象
+        NewPromise.prototype.then = function (onResolved, onRejected) {
+          onResolved =
+            typeof onResolved === "function" ? onResolved : (value) => value;
+          onRejected =
+            typeof onRejected === "function"
+              ? onRejected
+              : (reason) => {
+                  throw reason;
+                };
+
+          const self = this;
+          return new NewPromise((resolve, reject) => {
+            function handle(callback) {
+              try {
+                const result = callback(self.data);
+                if (result instanceof NewPromise) {
+                  result.then(
+                    (value) => resolve(value),
+                    (reason) => reject(reason)
+                  );
+                  //result.then(resolve, reject)
+                } else {
+                  resolve(result);
+                }
+              } catch (error) {
+                reject(error);
+              }
+            }
+
+            if (self.status === PENDING) {
+              self.callbacks.push({
+                onResolved(value) {
+                  handle(onResolved);
+                },
+                onRejected(reason) {
+                  handle(onRejected);
+                },
+              });
+            } else if (self.status === RESOLVED) {
+              setTimeout(() => {
+                handle(onResolved);
+              }, 0);
+            } else {
+              //self.status = REJECTED
+              setTimeout(() => {
+                handle(onRejected);
+              }, 0);
+            }
+          });
+        };
+
+        // NewPromise原型对象的catch()，指定失败的回调函数，返回一个新的NewPromise对象
+        NewPromise.prototype.catch = function (onRejected) {
+          return this.then(undefined, onRejected);
+        };
+
+        // NewPromise函数对象的resolve方法
+        NewPromise.resolve = function (value) {
+          return new NewPromise((resolve, reject) => {
+            if (value instanceof Promise) {
+              value.then(resolve, reject);
+            } else {
+              resolve(value);
+            }
+          });
+        };
+
+        // NewPromise函数对象的reject方法
+        NewPromise.reject = function (reason) {
+          return new NewPromise((resolve, reject) => {
+            reject(reason);
+          });
+        };
+
+        // NewPromise函数对象的all方法
+        NewPromise.all = function (newPromises) {
+          const values = new Array(newPromises.length);
+          let successCount = 0;
+          return new NewPromise((resolve, reject) => {
+            newPromises.forEach((p, index) => {
+              NewPromise.resolve(p).then(
+                (value) => {
+                  successCount++;
+                  values[index] = value;
+                  if (successCount === newPromises.length) {
+                    resolve(values);
+                  }
+                },
+                (reason) => {
+                  reject(reason);
+                }
+              );
+            });
+          });
+        };
+
+        // NewPromise函数对象的race方法
+        NewPromise.race = function (newPromises) {
+          return new NewPromise((resolve, reject) => {
+            newPromises.forEach((p) => {
+              NewPromise.resolve(p).then(
+                (value) => {
+                  resolve(value);
+                },
+                (reason) => {
+                  reject(reason);
+                }
+              );
+            });
+          });
+        };
+
+        // 向外暴露NewPromise函数
+        window.NewPromise = NewPromise;
+      })(window);
+
+      function fn() {
+        return new NewPromise((resolve, reject) => {
+          setTimeout(() => {
+            let data = Math.random() + 10;
+            if (data < 10) {
+              reject("小于11");
+            } else {
+              resolve(data);
+            }
+          }, 1500);
+        });
+      }
+
+      fn()
+        .then((r, j) => {
+          console.log("step1:", r);
+          console.log(j); //undefined
+          return r;
+        })
+        .then((newD) => {
+          console.log("step2:", newD);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      let arr = [fn(), fn(), fn()];
+      NewPromise.all(arr).then((data) => {
+        console.log(data);
+      });
+
+
+      console.log("fn", fn());
+
+      let p1 = new Promise((resolve, reject) => {
+        resolve("成功"); //fulfilled
+        reject("失败");
+      });
+      console.log("p1", p1);
+
+      let p2 = new Promise((resolve, reject) => {
+        reject("失败");
+        resolve("成功");
+      });
+      console.log("p2", p2);
+
+      let p3 = new Promise((resolve, reject) => {
+        throw "报错";
+      });
+      console.log("p3", p3);
+    </script>
+  </body>
+</html>
