@@ -42,6 +42,29 @@
         console.log(7);
         console.log(8);
         //2 3 4 5 7 8 100 6
+
+
+    
+        window.name = 'win'
+        const obj1 = {
+            name: 'joy',
+            age: 12,
+            getName: () => {
+                console.log(this); //其父作用域this是window,所以就是window
+                console.log(this.name); //win 
+            },
+            getAge: function () {
+                //通过obj.getAge调用,这里面this是指向obj
+                setTimeout(() => {
+                    //所以这里this也是指向obj 所以结果是12
+                    console.log(this.age); 
+                });
+            }
+        };
+
+        obj1.getName()
+        obj1.getAge()
+
     </script>
 </body>
 </html>
