@@ -6,12 +6,175 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>dialog</title>
     <style>
+        .d-dialog{
+            border: 1px solid #ccc;
+            width: 300px;
+            text-align: center;
+            background: lightcyan;
+            position: fixed;
+            left:50%;
+            margin-left: -150px;
+            top: 40%;
+        }
 
+        .d-confirm{
+            width: 50%;
+            padding: 20px 0;
+            float: right;
+            color: red;
+            cursor: pointer;
+        }
+        .d-close{
+            cursor: pointer;
+            border: 1px solid #ccc;
+            color: #222;
+            display: block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 50%;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+        .d-cancel{
+            width: 50%;
+            float:left;
+            padding: 20px 0;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
+    <!-- 
+        模板类：基础提示框 data渲染数据
+     -->
     <script>
-        
+        /**
+         * data:
+         * {
+         *     title: '温馨提示',
+         *     content: '提示内容',
+         *     confirm: 'confirm',
+         *     close: 'close',
+         *     success: function(){},
+         *     fail: function(){}   
+         * }
+         * 
+        */
+        function Dialog(data) {
+            if(!data){
+                return
+            }
+            //设置提示内容
+            this.close = data.close
+            this.content = data.content
+            this.panel = document.createElement('div')
+            this.contentNode = document.createElement('p')
+            this.confirmBtn = document.createElement('span')
+            this.panel.className = 'd-dialog'
+            this.confirmBtn.className = 'd-confirm'
+            this.confirmBtn.innerHTML = data.confirm || '确定'
+            this.contentNode.innerHTML = this.content
+            if(this.close){
+                this.closeBtn = document.createElement('b')
+                this.closeBtn.className = 'd-close'
+                this.closeBtn.innerHTML = 'x'
+            }
+            this.success = data.success || function(){}
+            this.fail = data.fail || function(){}
+        }
+
+        Dialog.prototype = {
+            init: function(){
+                this.panel.appendChild(this.contentNode)
+                this.panel.appendChild(this.confirmBtn)
+                this.close && this.panel.appendChild(this.closeBtn)
+                document.body.appendChild(this.panel)
+                this.bindEvent()
+                this.show()
+            },
+            bindEvent: function(){
+                let self = this
+                this.close && (this.closeBtn.onclick = function(){
+                    self.fail()
+                    self.hide()
+                })
+                this.confirmBtn.onclick = function(){
+                    self.success();
+                    self.hide()
+                }
+            },
+            show:function(){
+                this.panel.style.display = 'block'
+            },
+            hide:function(){
+                this.panel.style.display = 'none'
+            }
+        }
+
+        //有title的提示框
+         function TitleDialog(data){
+            Dialog.call(this, data)
+            this.title = data.title
+            this.titleNode = document.createElement('h3')
+            this.titleNode.className = 'd-title'
+            this.titleNode.innerHTML = this.title || '温馨提示'
+         }
+
+         TitleDialog.prototype = new Dialog()
+
+         TitleDialog.prototype.init = function(){
+             this.panel.insertBefore(this.titleNode, this.panel.firstchild)
+             Dialog.prototype.init.call(this)
+         }
+
+
+         //有取消按钮的提示框
+         function CancelDialog(data){
+            TitleDialog.call(this, data)
+            this.cancel = data.cancel
+            this.cancelBtn = document.createElement('b')
+            this.cancelBtn.className = 'd-cancel'
+            this.cancelBtn.innerHTML = this.cancel || '取消'
+         }
+
+         CancelDialog.prototype = new Dialog()
+
+         CancelDialog.prototype.init = function(){
+             TitleDialog.prototype.init.call(this)
+             this.panel.appendChild(this.cancelBtn)
+         }
+
+         CancelDialog.prototype.bindEvent = function(){
+            let self = this
+            TitleDialog.prototype.bindEvent.call(this)
+            this.cancelBtn.onclick = function(){
+                self.fail();
+                self.hide()
+            }
+         }
+
+
+
+         let data = {
+             title: '提示1',
+             close: true,
+             content: '提示内容',
+             confirm: '',
+             cancel: 'close',
+             success: function(){
+                console.log('确定')
+             },
+             fail: function(){
+                console.log('取消')
+             }
+         }
+
+        let d1 = new CancelDialog(data)
+         d1.init()
+
+
     </script>
 </body>
 </html>
