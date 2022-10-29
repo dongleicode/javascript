@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>17.3创建一个观察者</title>
+    <style></style>
+  </head>
+  <body>
+    <script>
+      let observer = (function () {
+        let __messages = {};
+        return {
+          //注册信息接口
+          register: function (type, fn) {
+            if (typeof __messages[type] === "undefined") {
+              __messages[type] = [fn];
+            } else {
+              __messages[type].push(fn);
+            }
+          },
+          //发布信息接口
+          fire: function (type, args) {
+            if (!__messages[type]) {
+              return;
+            }
+            let events = {
+                type: type, //消息类型
+                args: args || {},
+              },
+              i = 0,
+              len = __messages[type].length;
+
+            for (; i < len; i++) {
+              __messages[type][i].call(this, events);
+            }
+          },
+          //移除信息接口
+          remove: function (type, fn) {
+            // 如果消息动作队列存在
+            if (__messages[type] instanceof Array) {
+              let i = __messages[type].length - 1;
+              for (; i >= 0; i--) {
+                __messages[type][i] === fn && __messages[type].splice(i, 1);
+              }
+            }
+          },
+        };
+      })();
+      observer.register("test", function (e) {
+        console.log(e.type, e.args.msg);
+      });
+      　observer.fire('test', {msg:'传递参数'});　// test 传递参数
+    </script>
+  </body>
+</html>
