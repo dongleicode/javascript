@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>defineProperty</title>
+</head>
+<body>
+    Object.defineProperty:<input type="text" id="text1"><br/>
+    user.name:<div id="obj1"></div><br/>
+    <div></div>
+    <script>
+        let user = {
+            name: 'defineProperty',
+            age: 18,
+            obj: {
+                age: 23
+            }
+        }
+
+        let list = [1, 2]
+        Object.keys(user).forEach(key => {
+            let oldV = user[key]
+            Object.defineProperty(user, key, {
+                get(){
+                    console.log('%c 调用get', 'color: #ccc',`获取${key}属性: ${oldV}`)
+                    return oldV
+                },
+                set(val){
+                    console.log('%c 调用set', 'color: red',`修改${key}属性：${val}`)
+                    text1.value = val  //改变input
+                    changeDom1(val)   //改变dom
+                    oldV = val
+                }
+            })
+        })
+
+        //Vue对数组方法的重载
+        let arr = ['push', 'pop', 'shift', 'unshift', 'splice', 'sort', 'reverse']
+        arr.forEach(method => {
+            let original = Array.prototype[method]
+            Object.defineProperty(Array.prototype, method, {
+                value() {
+                    console.log('%c 调用数组方法', 'color: green', method)
+                    original.apply(this, arguments)
+                }
+            })
+        })
+
+        // user.obj.age
+        // list[6] = 6
+        // list[0] = 4
+        // list.pop(9)
+        // list[3] = 6
+        // delete user.name
+        // user.sex = '女'
+        // user.age = 23
+        // console.log(list)
+
+        //input输入数据改变
+        text1.oninput = function(e) {
+            user.name = e.target.value;
+        }
+
+        //dom数据改变
+        function changeDom1(str) {
+            obj1.innerHTML = str
+        }
+
+
+    </script>
+</body>
+</html>

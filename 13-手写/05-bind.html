@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>手写bind</title>
+    <style></style>
+  </head>
+  <body>
+    <script>
+      const html = document.documentElement;
+      var name = "window";
+      const person = {
+        name: "XiaoMing",
+        say() {
+          console.log(`my name is ${this.name}`);
+          console.log(arguments)
+        },
+        customSay(win) {
+          console.log(win.name);
+        },
+      };
+
+      Function.prototype.myBind = function (ctx, ...args) {
+        // 下面的this就是调用_bind的函数,保存给_self
+        const _self = this;
+        // bind 要返回一个函数, 就不会立即执行了
+        const newFn = function (...rest) {
+          // 调用 call 修改 this 指向
+          return _self.call(ctx, ...args, ...rest);
+        };
+        if (_self.prototype) {
+          // 复制源函数的prototype给newFn 一些情况下函数没有prototype，比如箭头函数
+          newFn.prototype = Object.create(_self.prototype);
+        }
+        return newFn;
+      };
+
+      let p = person.say.bind(window, [1,2, 3])
+      p()  //my name is window
+
+    </script>
+  </body>
+</html>
