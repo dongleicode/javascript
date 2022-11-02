@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>compose</title>
+    <style></style>
+  </head>
+  <body>
+    <!-- 
+题目描述:实现一个 compose 函数
+// 用法如下:
+function fn1(x) {
+  return x + 1;
+}
+function fn2(x) {
+  return x + 2;
+}
+function fn3(x) {
+  return x + 3;
+}
+function fn4(x) {
+  return x + 4;
+}
+const a = compose(fn1, fn2, fn3, fn4);
+console.log(a(1)); // 1+4+3+2+1=11
+
+     -->
+    <script>
+      function compose(...fn) {
+        if (!fn.length) return (v) => v;
+        if (fn.length === 1) return fn[0];
+        return fn.reduce(
+            (pre, cur) => 
+                (...args) => 
+                    pre(cur(...args))
+            // (pre, cur) => {
+            //     return (...args) => {
+            //         return pre(cur(...args))
+            //     }
+            // }
+        );
+      }
+      function fn1(x) {
+        return x + 1;
+      }
+      function fn2(x) {
+        return x + 2;
+      }
+      function fn3(x) {
+        return x + 3;
+      }
+      function fn4(x) {
+        return x + 4;
+      }
+      const af = compose(fn1, fn2, fn3, fn4);
+
+    //   af(1)
+      console.log(af(1)) // 11
+    </script>
+  </body>
+</html>

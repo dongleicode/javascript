@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>数组扁平化</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 
+        题目描述:实现一个方法使多维数组变成一维数组
+     -->
+    <script>
+        function flatter(arr) {
+            if(!arr.length) return
+            return arr.reduce(
+                (pre, cur) => 
+                    Array.isArray(cur) ? [...pre, ...flatter(cur)] : [...pre, cur],[]
+            )
+        }
+
+        //扩展思考：能用迭代的思路去实现吗?
+        function flatter1(arr) {
+            if(!arr.length) return
+            while(arr.some((item) => Array.isArray(item))){
+                arr = [].concat(...arr)
+            }
+            return arr
+        }
+        console.log(flatter1([1, 2, [1, [2, 3, [4, 5, [6]]]]]));
+    </script>
+</body>
+</html>
