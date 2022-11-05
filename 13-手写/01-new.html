@@ -17,19 +17,21 @@
             console.log(this)
         }
 
-        let p1 = new Person("rudy"); // this 是 Person {name: 'rudy'}
-        let p2 = new Person("kobe"); // this 是 Person {name: 'kobe'}
+        // let p1 = new Person("rudy"); // this 是 Person {name: 'rudy'}
+        // let p2 = new Person("kobe"); // this 是 Person {name: 'kobe'}
 
         //手写new
         function createNew() {
             // 创建个对象
             var obj = new Object();
             // 获取第一个参数,既传入的构造函数
+            // Constructor  = arguments[0]
             Constructor = [].shift.call(arguments);
             // 将obj的原型指向Constructor(构造函数)，这样obj就可以访问到构造函数原型中的属性
             obj.__proto__ = Constructor.prototype;
             // 使用 apply，改变构造函数 this 的指向到新建的对象，这样 obj 就可以访问到构造函数中的属性
             var ret = Constructor.apply(obj, arguments);
+            console.log(typeof ret === "object")
             // 返回obj对象
             return typeof ret === "object" ? ret : obj;
         }
@@ -38,10 +40,11 @@
          console.log("this is " + this.name);
         };
 
-        let person = createNew(Person, "rudy");
+        let person = createNew(Person, "天大地大");
 
-        console.log(person.name); // rudy;
-        person.sayName(); // this is rudy;
+        console.log(person.name); // 天大地大;
+        person.sayName(); // this is 天大地大;
+        console.log(person instanceof Person)
     </script>
 </body>
 </html>

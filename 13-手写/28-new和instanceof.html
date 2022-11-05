@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>手撕new</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        function myNew(){
+            let obj = {}
+            let first = [].shift.call(arguments)
+            obj.__proto__ = first.prototype
+            let ret = first.apply(obj, arguments)
+            return obj
+        }
+
+        function Parent(name){
+            this.name = name
+        }
+
+        Parent.prototype.say = function(){
+            console.log(this.name)
+        }
+
+        let c = myNew(Parent, '父亲')
+        console.log(c.name)
+        c.say()
+        console.log(c instanceof Parent)
+
+
+        function myInstanceof(obj, fn){
+            let l = obj.__proto__
+            let r = fn.prototype
+            while(true){
+                if(l === null) return false
+                if(l === r) return true
+                l = l.__proto__
+            }
+        }
+        console.log(myInstanceof(c, Parent))
+
+    </script>
+</body>
+</html>
