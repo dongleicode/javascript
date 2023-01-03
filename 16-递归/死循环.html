@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <style></style>
+  </head>
+  <body>
+    <script src="./menu.js"></script>
+    <script>
+      console.log("原始数据：");
+      console.table(arr);
+      function filterAsynRouter(routes) {
+        const tempRoutes = routes;
+        for (const r in tempRoutes) {
+          const route = tempRoutes[r];
+          if (route.parentId == 0 && route.type == 1) {
+            //菜单
+            route.children = [
+              {
+                name: route.title,
+                component: routerMap[route.path]
+              }
+            ]
+          }
+          if (route.parentId == 0 && route.type == 2) {
+            //按钮
+            route.hidden = true;
+          }
+          if (route.parentId == 0 && route.type == 3) {
+            //外部链接
+            let newItem = {
+              path: route.title,
+              component: routerMap.layout,
+              children: [
+                {
+                  path: route.path,
+                  meta: { title: "externalLink" + r, icon: "link" },
+                },
+              ],
+            };
+            Object.assign(route, newItem);
+          }
+          route.component = routerMap[route.path]
+            ? routerMap[route.path]
+            : routerMap.layout;
+          if (route && route.children && route.children.length > 0) {
+            filterAsynRouter(route.children);
+          }
+        }
+        return routes;
+      }
+
+      console.log("路由数据：");
+      console.table(filterAsynRouter(arr));
+    </script>
+  </body>
+</html>

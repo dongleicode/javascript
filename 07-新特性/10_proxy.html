@@ -13,30 +13,39 @@
     <script>
         let target = {
             name: 'proxy',
-            _age: 21
+            _age: 21,
+            get bar(){
+                return this._age
+            }
         }
         let handle = {
-            get(target, key){
+            get(target, key, receiver){
                 let oldV = target[key];
                 console.log(`获取${oldV}`);
-                if(key.includes('_')){
-                    return '无可奉告'
-                }
+                // if(key.includes('_')){
+                //     return '无可奉告'
+                // }
                 return target[key]
+                // return Reflect.get(target, key, receiver)
             },
             set(target, key, newV){
-                if(key.includes('_')){
-                    return 21
-                }
+                // if(key.includes('_')){
+                //     return 21
+                // }
                 console.log(`${key}设置为${newV}`);
                 target[key] = newV
             }
         }
-        let proxy = new Proxy(target, handle)
-        // proxy.name = 'bill'
-        proxy._age = 30
-        console.log(proxy)
+        let p = new Proxy(target, handle)
+        p.name = 'bill'
+        // p._age = 30
+        console.log(p)
+        p._age++
+        console.log(p.bar)
 
+        effect(() => {
+            console.log(p.bar)
+        })
 
     </script>
 </body>
