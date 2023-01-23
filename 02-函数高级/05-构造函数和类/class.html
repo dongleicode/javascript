@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title></title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <script>
+        //构造函数
+        function Person(x, y){
+            this.x = x
+            this.y = y 
+        }
+        Person.prototype.add = function(){
+            console.log(this.x + this.y)
+        }
+
+        let p1 = new Person(1, 2)
+        console.log(p1.add())
+
+        class Persons{
+            constructor(x, y){
+                this.x = x
+                this.y = y
+            }
+            add(){
+                console.log(this.x + this.y)
+            }
+        }
+
+        let p2 = new Persons(1, 2)
+        console.log(p2.add(1, 2))
+
+        console.log(typeof Persons) //function
+        console.log(Persons === Persons.prototype.constructor) //true
+
+        class B{}
+        let b = new B()
+
+        console.log(b.constructor === B.prototype.constructor) //true
+
+    </script>
+</body>
+</html>
