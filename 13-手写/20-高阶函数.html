@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>高阶函数</title>
+    <style></style>
+  </head>
+  <body>
+    <script>
+      /**
+       * 高阶函数：满足以下一个条件即可
+       * ! 1.接受一个或多个函数
+       * ! 2.输出一个函数
+       */
+
+      function useName(call) {
+        //call是一个函数，也是个组件
+        function getName() {
+          const userName = "admin";
+          call(userName);
+        }
+        return getName;
+      }
+
+      function login(name){
+        console.log(name + '登录');
+        
+      }
+
+      function logout(name) {
+          console.log(name + '退出')
+      }
+
+      let log1 = useName(login)
+      let log2 = useName(logout)
+
+      log1() //admin登录
+      log2() //admin退出
+    </script>
+  </body>
+</html>
