@@ -40,6 +40,21 @@
       let p = person.say.bind(window, [1,2, 3])
       p()  //my name is window
 
+      function list(){
+        //伪数组转真数组
+        return Array.prototype.slice.call(arguments)
+      }
+
+      function add(a1, a2) {
+          return a1 + a2
+      }
+
+      let list1 = list(1, 2, 3)
+      console.log(list1)
+      let result1 = ada(1, 2)
+      console.log(result1)
+
+
     </script>
   </body>
 </html>
