@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>高阶函数</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    纯函数：函数执行过程中，没有产生副作用（参数相同，返回结果相同）
+    高阶函数：就是把函数当做参数进行传递
+    科里化函数：就是把函数当参数，并return 一个函数
+    <script>
+        //纯函数
+        function typ(obj) {
+            return Object.prototype.toString.call(obj)
+        }
+        function add(...args) {
+            // let arr = [].slice.call(arguments)
+            return args.reduce((n, o) => {
+                return n + o
+            })
+        }
+
+        function high(...args){
+            // let one = [].slice.call(arguments)[0]
+            let [fn, ...arg] = args
+            return fn(...arg)
+        }
+
+        /** 函数可以当做参数传递 */
+        let h = high(add, 1, 2, 3, 4)
+        // console.log(h)
+
+        function keLiHua(fn) {
+            /** 函数可以当做返回值 */
+            return (...args) => {
+                return fn(...args)
+            }
+        }
+
+        let k = keLiHua(add)(1, 2, 3, 4)
+        console.log(k);
+        
+        
+    </script>
+</body>
+</html>
