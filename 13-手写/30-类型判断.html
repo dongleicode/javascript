@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>类型判断</title>
+    <style></style>
+  </head>
+  <body>
+    1.js数据类型的判断主要有三种方法： typeof，instanceof，Object.prototype.toString.call() <br>
+    2.typeof可以区分原始类型，undefined和 function 数据类型 Object.prototype.toString.call()<br>
+    3.区分的数据类型适用范围更大，但是无法区分自定义对象类型<br>
+    4.区分自定义对象类型使用 instanceof 操作符<br>
+    5.js中null：即是对象，又不是对象，史称【薛定谔的对象】<br>
+    6.判断数据类型方法有很多，实际使用需要根据自己的需求使用最适合自己的方法<br>
+    <script>
+        function getType(data) {
+            return Object.prototype.toString.call(data).slice(8, -1)
+        }
+
+        console.log(typeof([1,2]))
+        console.log(getType([1,2,3]) === 'Array')
+        console.log(getType(null)) //Null
+        console.log(getType('string')) //String
+
+    </script>
+  </body>
+</html>

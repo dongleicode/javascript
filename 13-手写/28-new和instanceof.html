@@ -11,12 +11,19 @@
 </head>
 <body>
     <script>
+        //实现new关键字的老方法
         function myNew(){
             let obj = {}
             let first = [].shift.call(arguments)
             obj.__proto__ = first.prototype
-            let ret = first.apply(obj, arguments)
+            first.apply(obj, arguments)
             return obj
+        }
+
+        //实现new关键字的新方法
+        function nowNew(){
+            let fn = [].shift.call(arguments)
+            return Reflect.construct(fn, arguments)
         }
 
         function Parent(name){
@@ -28,10 +35,12 @@
         }
 
         let c = myNew(Parent, '父亲')
+
         console.log(c.name)
         c.say()
         console.log(c instanceof Parent)
 
+        console.log(c.__proto__.__proto__.__proto__) //null
 
         function myInstanceof(obj, fn){
             let l = obj.__proto__
