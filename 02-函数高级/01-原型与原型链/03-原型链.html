@@ -63,6 +63,9 @@
         console.log(Fn.prototype instanceof Object); //true
         console.log(Function.prototype instanceof Object); //true
         console.log(fn.prototype instanceof Object); //false
+
+        console.log("fn.prototype instanceof Object",fn.__proto__ instanceof Object); //true
+
         console.log(Object.prototype instanceof Object); //false
 
 
@@ -102,6 +105,10 @@
     */
 
     console.log(Object.prototype.__proto__) //null
+    console.log(Object.__proto__) //ƒ () { [native code] }
+
+    let f2 = new Fn()
+    console.log(fn.__proto__ === f2.__proto__) // true
 
 
     </script>

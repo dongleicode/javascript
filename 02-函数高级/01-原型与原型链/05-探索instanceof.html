@@ -29,7 +29,7 @@
         console.log(Foo.prototype === f1.__proto__); //true
 
         console.log(Object instanceof Function); //true
-        console.log(Object.__proto__ === Function.prototype);
+        console.log("Object.__proto__ === Function.prototype",Object.__proto__ === Function.prototype); //true
         console.log(Object instanceof Object);  //true
         console.log(Function instanceof Function); // true
         console.log(Function instanceof Object); // true
@@ -38,6 +38,9 @@
         console.log(Object.__proto__ === Foo.prototype); //false
         console.log(Function instanceof Foo); //false
 
+        console.log(Foo instanceof Function); //true
+        console.log(Foo instanceof Object); //true
+        
 
     </script>
     

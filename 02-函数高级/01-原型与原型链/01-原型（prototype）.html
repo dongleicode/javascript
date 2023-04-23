@@ -16,10 +16,11 @@
      -->
 
      <script>
-        console.log(Date.constructor)
+        console.log(Date.constructor) //ƒ Function() { [native code] }
 
-        console.log(Date.prototype, typeof Date.prototype)
-        // console.log('类型判断：', Object.toString.call([1,2,3]))
+
+        console.log(Date.prototype) //原型对象
+        console.log('类型判断：', Object.prototype.toString.call(Date.prototype).slice(8, -1)) //Object
 
         function Fun(){
 
@@ -48,6 +49,8 @@
         console.log("Fun.prototype:", Fun.prototype)
 
         console.log(fun.__proto__ === Fun.prototype) //true
+
+        console.log(fun.__proto__.__proto__ === Fun.prototype.__proto__) //true
 
 
      </script>
